@@ -1,2 +1,2 @@
 # Miralis
-Miralis is a game engine project focused on robust rendering and physical simulations
+Miralis is a cutting-edge game engine designed for robust rendering and advanced physical simulations, providing developers with a powerful platform for creating dynamic, visually immersive worlds
