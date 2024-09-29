@@ -5,22 +5,22 @@ VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Miralis", "Miralis\Miralis.vcxproj", "{A3708285-50A7-48DB-8A8E-08B36AE0179B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SandBox", "SandBox\SandBox.vcxproj", "{94F843A2-BF8B-45BA-8B08-AD19BB796EDB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
 		Release|x64 = Release|x64
-		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A3708285-50A7-48DB-8A8E-08B36AE0179B}.Debug|x64.ActiveCfg = Debug|x64
 		{A3708285-50A7-48DB-8A8E-08B36AE0179B}.Debug|x64.Build.0 = Debug|x64
-		{A3708285-50A7-48DB-8A8E-08B36AE0179B}.Debug|x86.ActiveCfg = Debug|Win32
-		{A3708285-50A7-48DB-8A8E-08B36AE0179B}.Debug|x86.Build.0 = Debug|Win32
 		{A3708285-50A7-48DB-8A8E-08B36AE0179B}.Release|x64.ActiveCfg = Release|x64
 		{A3708285-50A7-48DB-8A8E-08B36AE0179B}.Release|x64.Build.0 = Release|x64
-		{A3708285-50A7-48DB-8A8E-08B36AE0179B}.Release|x86.ActiveCfg = Release|Win32
-		{A3708285-50A7-48DB-8A8E-08B36AE0179B}.Release|x86.Build.0 = Release|Win32
+		{94F843A2-BF8B-45BA-8B08-AD19BB796EDB}.Debug|x64.ActiveCfg = Debug|x64
+		{94F843A2-BF8B-45BA-8B08-AD19BB796EDB}.Debug|x64.Build.0 = Debug|x64
+		{94F843A2-BF8B-45BA-8B08-AD19BB796EDB}.Release|x64.ActiveCfg = Release|x64
+		{94F843A2-BF8B-45BA-8B08-AD19BB796EDB}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
