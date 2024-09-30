@@ -1,4 +1,5 @@
 #include "Miralis.h"
+
 #include <iostream>
 class Sandbox : public Miralis::Application {
 public:
@@ -12,7 +13,7 @@ public:
 };
 
 Miralis::Application* Miralis::CreateApplication() {
+	std::cout << "Hellow";
 	return new Sandbox();
 }
-
 
