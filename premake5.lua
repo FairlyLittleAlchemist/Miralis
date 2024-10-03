@@ -6,27 +6,25 @@ workspace "Miralis"
 		"Release"
 	   }
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
-IncludeDir = {}
-IncludeDir["spdlog"] = "Miralis/vendor/spdlog"
+
 project "Miralis"
       location "Miralis"
       kind "SharedLib"
+	  language "C++"
+
       
    	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-	   objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
       
    	files
-	   {
+	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp"
-	   }
-
-
-      
-	includedirs
+	}
+	externalincludedirs
 	{
 		"%{prj.name}/src",
-      "%{IncludeDir.spdlog}"
+		"%{prj.name}/vendor/spdlog/include"
 	}
    filter "system:windows"
    cppdialect "C++17"
@@ -46,18 +44,12 @@ project "Miralis"
 
    filter "configurations:Debug"
    defines "MR_DEBUG"
-   buildoptions "/MDd"
    symbols "On"
 
-filter "configurations:Release"
+	filter "configurations:Release"
    defines "MR_RELEASE"
-   buildoptions "/MD"
    optimize "On"
 
-filter "configurations:Dist"
-   defines "MR_DIST"
-   buildoptions "/MD"
-   optimize "On"
 
 
 
@@ -76,10 +68,10 @@ filter "configurations:Dist"
 		"%{prj.name}/src/**.cpp"
 	}
 
-	includedirs
+	externalincludedirs
 	{
-		"Miralis/src",
-      "%{IncludeDir.spdlog}"
+	"Miralis/vendor/spdlog/include",
+	"Miralis/src"
 	}
 	links
 	{
@@ -99,15 +91,8 @@ filter "configurations:Dist"
 
 	filter "configurations:Debug"
 		defines "MR_DEBUG"
-		buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "MR_RELEASE"
-		buildoptions "/MD"
-		optimize "On"
-
-	filter "configurations:Dist"
-		defines "MR_DIST"
-		buildoptions "/MD"
 		optimize "On"

@@ -1,5 +1,6 @@
 #pragma once
 #include"Core.h"
+
 namespace Miralis{
 class MIRALIS_API Application
 {

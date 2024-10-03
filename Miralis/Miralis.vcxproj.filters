@@ -16,9 +16,15 @@
     <ClInclude Include="src\Miralis\EntryPoint.h">
       <Filter>Miralis</Filter>
     </ClInclude>
+    <ClInclude Include="src\Miralis\Log.h">
+      <Filter>Miralis</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Miralis\Application.cpp">
+      <Filter>Miralis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Miralis\Log.cpp">
       <Filter>Miralis</Filter>
     </ClCompile>
   </ItemGroup>

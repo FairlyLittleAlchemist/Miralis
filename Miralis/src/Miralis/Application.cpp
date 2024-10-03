@@ -1,15 +1,15 @@
+#define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_TRACE
 #include "Application.h"
-#include<iostream>
+#include "Log.h"
+#include <iostream>
 namespace Miralis {
 	Application::Application() {
-
+		Miralis::Log::Init();
+		Miralis::Log::GetCoreLogger()->warn("This is wwarinig {}", 20);
 	};
 	void Application::Run()
 	{
-		std::cout << "Hi From DLL";
-		while (true);
 	};
 	Application::~Application() {
-
 	};
 }
