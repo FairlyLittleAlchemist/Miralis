@@ -1,13 +1,10 @@
 #include "Miralis.h"
-
+#include <Miralis/Log.h>
 class Sandbox : public Miralis::Application {
 public:
 	Sandbox() {
-
 	};
-
 	~Sandbox() {
-
 	}
 };
 

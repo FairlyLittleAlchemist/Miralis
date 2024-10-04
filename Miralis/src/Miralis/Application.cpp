@@ -5,7 +5,7 @@
 namespace Miralis {
 	Application::Application() {
 		Miralis::Log::Init();
-		Miralis::Log::GetCoreLogger()->warn("This is wwarinig {}", 20);
+		MR_LOG_CLIENT_INFO("Hellow");
 	};
 	void Application::Run()
 	{

@@ -5,7 +5,10 @@ namespace Miralis {
 	std::shared_ptr<spdlog::logger> Log::s_ClientLogger;
 
 	void Log::Init() {
-		spdlog::set_pattern("%^[%T] %n: %v%$");
+		//TODO Make this Use THE SPD_LOG Macro
+		//spdlog::set_pattern("[%H:%M:%S.%e] [Level:%l] [%s:%#][%!] %n: %v%$");
+
+		spdlog::set_pattern("[%H:%M:%S.%e] [TheardId:%t]  %n : %v%$");
 		s_CoreLogger = spdlog::stdout_color_mt("Core Logging");
 		s_CoreLogger->set_level(spdlog::level::trace);
 
