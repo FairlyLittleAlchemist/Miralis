@@ -101,11 +101,15 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Miralis\ApplicationEvent.h" />
+    <ClInclude Include="src\Miralis\Event.h" />
     <ClInclude Include="src\Miralis.h" />
     <ClInclude Include="src\Miralis\Application.h" />
     <ClInclude Include="src\Miralis\Core.h" />
     <ClInclude Include="src\Miralis\EntryPoint.h" />
+    <ClInclude Include="src\Miralis\KeyEvent.h" />
     <ClInclude Include="src\Miralis\Log.h" />
+    <ClInclude Include="src\Miralis\MouseEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Miralis\Application.cpp" />

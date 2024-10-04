@@ -19,6 +19,14 @@
     <ClInclude Include="src\Miralis\Log.h">
       <Filter>Miralis</Filter>
     </ClInclude>
+    <ClInclude Include="src\Miralis\Event.h">
+      <Filter>Miralis</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Miralis\ApplicationEvent.h">
+      <Filter>Miralis</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Miralis\KeyEvent.h" />
+    <ClInclude Include="src\Miralis\MouseEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Miralis\Application.cpp">

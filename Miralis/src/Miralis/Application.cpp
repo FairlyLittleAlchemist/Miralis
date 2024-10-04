@@ -2,10 +2,14 @@
 #include "Application.h"
 #include "Log.h"
 #include <iostream>
+#include "Event.h"
+#include "ApplicationEvent.h"
+
+
 namespace Miralis {
 	Application::Application() {
 		Miralis::Log::Init();
-		MR_LOG_CLIENT_INFO("Hellow");
+		MR_LOG_CORE_WARN("Application Warn")
 	};
 	void Application::Run()
 	{

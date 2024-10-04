@@ -6,3 +6,4 @@
 #define MIRALIS_API _declspec(dllimport)
 #endif 
 #endif //  MR_PLATFORM_WINDOWS
+#define BIT(x) (x>>1)
