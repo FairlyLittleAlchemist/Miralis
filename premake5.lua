@@ -6,7 +6,9 @@ workspace "Miralis"
 		"Release"
 	   }
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
-
+includedir ={}
+includedir["GLFW"] = "Miralis/vendor/GLFW/include"
+include "Miralis/vendor/GLFW"
 project "Miralis"
       location "Miralis"
       kind "SharedLib"
@@ -24,8 +26,16 @@ project "Miralis"
 	externalincludedirs
 	{
 		"%{prj.name}/src",
+		includedir["GLFW"],
 		"%{prj.name}/vendor/spdlog/include"
 	}
+
+
+	links
+	{
+		"GLFW"
+	}
+
    filter "system:windows"
    cppdialect "C++17"
    staticruntime "On"
@@ -43,7 +53,7 @@ project "Miralis"
    }
 
    filter "configurations:Debug"
-   defines "MR_DEBUG"
+   defines {"MR_DEBUG","MR_ENABLE_ASSERT"}
    symbols "On"
 
 	filter "configurations:Release"
@@ -90,8 +100,8 @@ project "Miralis"
 		}
 
 	filter "configurations:Debug"
-		defines "MR_DEBUG"
-		symbols "On"
+	defines {"MR_DEBUG","MR_ENABLE_ASSERT"}
+	symbols "On"
 
 	filter "configurations:Release"
 		defines "MR_RELEASE"

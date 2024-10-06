@@ -1,6 +1,6 @@
 #pragma once
-#include"Core.h"
-#include"Miralis/Event.h"
+#include"Miralis/Core.h"
+#include"Miralis/Events/Event.h"
 #include<sstream>
 namespace Miralis {
 	class MIRALIS_API MouseMovedEvent : public Event {

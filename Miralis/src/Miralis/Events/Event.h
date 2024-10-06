@@ -1,7 +1,7 @@
 #pragma once
 #include<iostream>
 #include <functional>
-#include "Core.h"
+#include "Miralis/Core.h"
 namespace Miralis{
 	enum  class EventType {
 		None=0,

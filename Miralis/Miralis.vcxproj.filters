@@ -4,6 +4,15 @@
     <Filter Include="Miralis">
       <UniqueIdentifier>{16813728-8260-B6C3-8B78-419AF7D61C25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Miralis\Events">
+      <UniqueIdentifier>{3A58BA29-2626-AE2F-0FBA-1E56FB268A94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platfrom">
+      <UniqueIdentifier>{8AD388B4-76A0-E3BF-9FB9-D1678BE5184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platfrom\Windows">
+      <UniqueIdentifier>{C467CE9E-B060-EDF0-D992-D275C5EACCFC}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Miralis.h" />
@@ -16,17 +25,27 @@
     <ClInclude Include="src\Miralis\EntryPoint.h">
       <Filter>Miralis</Filter>
     </ClInclude>
+    <ClInclude Include="src\Miralis\Events\ApplicationEvent.h">
+      <Filter>Miralis\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Miralis\Events\Event.h">
+      <Filter>Miralis\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Miralis\Events\KeyEvent.h">
+      <Filter>Miralis\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Miralis\Events\MouseEvent.h">
+      <Filter>Miralis\Events</Filter>
+    </ClInclude>
     <ClInclude Include="src\Miralis\Log.h">
       <Filter>Miralis</Filter>
     </ClInclude>
-    <ClInclude Include="src\Miralis\Event.h">
+    <ClInclude Include="src\Miralis\Window.h">
       <Filter>Miralis</Filter>
     </ClInclude>
-    <ClInclude Include="src\Miralis\ApplicationEvent.h">
-      <Filter>Miralis</Filter>
+    <ClInclude Include="src\Platfrom\Windows\WindowsWindow.h">
+      <Filter>Platfrom\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="src\Miralis\KeyEvent.h" />
-    <ClInclude Include="src\Miralis\MouseEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Miralis\Application.cpp">
@@ -34,6 +53,9 @@
     </ClCompile>
     <ClCompile Include="src\Miralis\Log.cpp">
       <Filter>Miralis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platfrom\Windows\WindowsWindow.cpp">
+      <Filter>Platfrom\Windows</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

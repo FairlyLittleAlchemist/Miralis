@@ -46,7 +46,7 @@
     <IntDir>..\bin-int\Debug-windows-x86_64\Miralis\</IntDir>
     <TargetName>Miralis</TargetName>
     <TargetExt>.dll</TargetExt>
-    <ExternalIncludePath>src;vendor\spdlog\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>src;vendor\GLFW\include;vendor\spdlog\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -54,13 +54,13 @@
     <IntDir>..\bin-int\Release-windows-x86_64\Miralis\</IntDir>
     <TargetName>Miralis</TargetName>
     <TargetExt>.dll</TargetExt>
-    <ExternalIncludePath>src;vendor\spdlog\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>src;vendor\GLFW\include;vendor\spdlog\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>MR_PLATFORM_WINDOWS;MR_BUILD_DLL;MR_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MR_PLATFORM_WINDOWS;MR_BUILD_DLL;MR_DEBUG;MR_ENABLE_ASSERT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -101,19 +101,27 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Miralis\ApplicationEvent.h" />
-    <ClInclude Include="src\Miralis\Event.h" />
     <ClInclude Include="src\Miralis.h" />
     <ClInclude Include="src\Miralis\Application.h" />
     <ClInclude Include="src\Miralis\Core.h" />
     <ClInclude Include="src\Miralis\EntryPoint.h" />
-    <ClInclude Include="src\Miralis\KeyEvent.h" />
+    <ClInclude Include="src\Miralis\Events\ApplicationEvent.h" />
+    <ClInclude Include="src\Miralis\Events\Event.h" />
+    <ClInclude Include="src\Miralis\Events\KeyEvent.h" />
+    <ClInclude Include="src\Miralis\Events\MouseEvent.h" />
     <ClInclude Include="src\Miralis\Log.h" />
-    <ClInclude Include="src\Miralis\MouseEvent.h" />
+    <ClInclude Include="src\Miralis\Window.h" />
+    <ClInclude Include="src\Platfrom\Windows\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Miralis\Application.cpp" />
     <ClCompile Include="src\Miralis\Log.cpp" />
+    <ClCompile Include="src\Platfrom\Windows\WindowsWindow.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">
+      <Project>{154B857C-0182-860D-AA6E-6C109684020F}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
