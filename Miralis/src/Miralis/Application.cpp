@@ -1,4 +1,3 @@
-#define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_TRACE
 #include "Application.h"
 #include "Log.h"
 #include <iostream>
@@ -13,7 +12,6 @@ namespace Miralis {
 	void Application::Run()
 	{
 		while (m_Running) {
-
 			m_Window->OnUpdate();
 		}
 	};
@@ -31,6 +29,5 @@ namespace Miralis {
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindwClose, this, std::placeholders::_1));
 
-		::Miralis::Log::GetCoreLogger()->trace("{0}", e.ToString());
 	}
 }
