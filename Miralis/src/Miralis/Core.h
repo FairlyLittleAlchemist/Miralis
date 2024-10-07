@@ -10,8 +10,8 @@
 
 
 #ifdef MR_ENABLE_ASSERT
-#define MR_CLINE_ERROR_ASSERT(x,...) {if(!x){MR_LOG_CLINE_ERROR("Assertion Failed {0}", _VA_ARGS_); __debugbreak;};};
-#define MR_CORE_ASSERT(x,...) {if(!x){MR_LOG_CORE_ERROR("Assertion Failed {0}", _VA_ARGS_); __debugbreak;};};
+#define MR_CLINE_ERROR_ASSERT(x,...) {if(!x){MR_LOG_CLINE_ERROR("Assertion Failed {0}", __VA_ARGS__); __debugbreak;};};
+#define MR_CORE_ASSERT(x,...) {if(!x){MR_LOG_CORE_ERROR("Assertion Failed {0}", __VA_ARGS__); __debugbreak;};};
 #else
 #define MR_CLINE_ERROR_ASSERT(x,...)
 #define MR_CORE_ASSERT(x,...)

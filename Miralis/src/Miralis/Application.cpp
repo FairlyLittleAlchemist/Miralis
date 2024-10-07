@@ -2,22 +2,35 @@
 #include "Application.h"
 #include "Log.h"
 #include <iostream>
-#include "Events/Event.h"
-#include "Events/ApplicationEvent.h"
-#include "GLFW/glfw3.h"
+
 
 namespace Miralis {
 	Application::Application() {
 		Miralis::Log::Init();
 		m_Window = std::unique_ptr<Window> (Window::Create());
-		MR_LOG_CORE_WARN("Application Warn")
+		m_Window->SetEventClassBack(std::bind(&Application::OnEvent, this, std::placeholders::_1));
 	};
 	void Application::Run()
 	{
-		while (true) {
+		while (m_Running) {
+
 			m_Window->OnUpdate();
 		}
 	};
 	Application::~Application() {
-	};
+	}
+	bool Application::OnWindwClose(WindowCloseEvent& e)
+	{
+		m_Running = false;
+		return true;
+	}
+	;
+
+
+	void Application::OnEvent(Event& e) {
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindwClose, this, std::placeholders::_1));
+
+		::Miralis::Log::GetCoreLogger()->trace("{0}", e.ToString());
+	}
 }

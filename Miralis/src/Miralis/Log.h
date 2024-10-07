@@ -26,62 +26,62 @@ namespace Miralis {
 
 
 
-#define MR_LOG_CORE_INFO(__Params__) ::Miralis::Log::GetCoreLogger()->info(__Params__);
+#define MR_LOG_CORE_INFO(...) ::Miralis::Log::GetCoreLogger()->info(__VA_ARGS__);
 
-#define MR_LOG_CORE_ERROR(__Params__) ::Miralis::Log::GetCoreLogger()->error(__Params__);
+#define MR_LOG_CORE_ERROR(...) ::Miralis::Log::GetCoreLogger()->error(__VA_ARGS__);
 
-#define MR_LOG_CORE_WARN(__Params__) ::Miralis::Log::GetCoreLogger()->warn(__Params__);
+#define MR_LOG_CORE_WARN(...) ::Miralis::Log::GetCoreLogger()->warn(__VA_ARGS__);
 
-#define MR_LOG_CORE_CRITICAL(__Params__) ::Miralis::Log::GetCoreLogger()->critical(__Params__);
+#define MR_LOG_CORE_CRITICAL(...) ::Miralis::Log::GetCoreLogger()->critical(__VA_ARGS__);
 
-#define MR_LOG_CORE_DEBUG(__Params__) ::Miralis::Log::GetCoreLogger()->debug(__Params__);
+#define MR_LOG_CORE_DEBUG(...) ::Miralis::Log::GetCoreLogger()->debug(__VA_ARGS__);
 
-#define MR_LOG_CORE_TRACE(__Params__) ::Miralis::Log::GetCoreLogger()->trace(__Params__);
+#define MR_LOG_CORE_TRACE(...) ::Miralis::Log::GetCoreLogger()->trace(__VA_ARGS__);
 
 
 
 //Clinet Logger
 
-#define MR_LOG_CLIENT_INFO(__Params__) ::Miralis::Log::GetClientLogger()->info(__Params__);
+#define MR_LOG_CLIENT_INFO(...) ::Miralis::Log::GetClientLogger()->info(__VA_ARGS__);
 
-#define MR_LOG_CLIENT_ERROR(__Params__) ::Miralis::Log::GetClientLogger()->error(__Params__);
+#define MR_LOG_CLIENT_ERROR(...) ::Miralis::Log::GetClientLogger()->error(__VA_ARGS__);
 
-#define MR_LOG_CLIENT_WARN(__Params__) ::Miralis::Log::GetClientLogger()->warn(__Params__);
+#define MR_LOG_CLIENT_WARN(...) ::Miralis::Log::GetClientLogger()->warn(__VA_ARGS__);
 
-#define MR_LOG_CLIENT_CRITICAL(__Params__) ::Miralis::Log::GetClientLogger()->critical(__Params__);
+#define MR_LOG_CLIENT_CRITICAL(...) ::Miralis::Log::GetClientLogger()->critical(__VA_ARGS__);
 
-#define MR_LOG_CLIENT_DEBUG(__Params__) ::Miralis::Log::GetClientLogger()->debug(__Params__);
+#define MR_LOG_CLIENT_DEBUG(...) ::Miralis::Log::GetClientLogger()->debug(__VA_ARGS__);
 
-#define MR_LOG_CLIENT_TRACE(__Params__) ::Miralis::Log::GetClientLogger()->trace(__Params__);
+#define MR_LOG_CLIENT_TRACE(...) ::Miralis::Log::GetClientLogger()->trace(__VA_ARGS__);
 
 
 
 #else
 
-#define MR_LOG_CORE_ERROR(__Params__)
+#define MR_LOG_CORE_ERROR(__VA_ARGS__)
 
-#define MR_LOG_CORE_WARN(__Params__) 
+#define MR_LOG_CORE_WARN(__VA_ARGS__) 
 
-#define MR_LOG_CORE_CRITICAL(__Params__) 
+#define MR_LOG_CORE_CRITICAL(__VA_ARGS__) 
 
-#define MR_LOG_CORE_DEBUG(__Params__) 
+#define MR_LOG_CORE_DEBUG(__VA_ARGS__) 
 
-#define MR_LOG_CORE_TRACE(__Params__) 
+#define MR_LOG_CORE_TRACE(__VA_ARGS__) 
 
 
 
 //Clinet Logger
 
-#define MR_LOG_CLIENT_INFO(__Params__)
+#define MR_LOG_CLIENT_INFO(__VA_ARGS__)
 
-#define MR_LOGCLIENT_ERROR(__Params__) 
+#define MR_LOGCLIENT_ERROR(__VA_ARGS__) 
 
-#define MR_LOGCLIENT_WARN(__Params__) 
+#define MR_LOGCLIENT_WARN(__VA_ARGS__) 
 
-#define MR_LOGCLIENT_CRITICAL(__Params__) 
+#define MR_LOGCLIENT_CRITICAL(__VA_ARGS__) 
 
-#define MR_LOGCLIENT_DEBUG(__Params__) 
+#define MR_LOGCLIENT_DEBUG(__VA_ARGS__) 
 
-#define MR_LOGCLIENT_TRACE(__Params__) 
+#define MR_LOGCLIENT_TRACE(__VA_ARGS__) 
 
 #endif

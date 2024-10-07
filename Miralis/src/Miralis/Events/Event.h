@@ -23,6 +23,7 @@ namespace Miralis{
 																	virtual const char* GetName() const override { return #type; }
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return  category; }
 	class MIRALIS_API Event{
+	public:
 		friend class EventDispatcher;
 		virtual  EventType GetEventType() const = 0;
 		virtual const char* GetName() const = 0;
@@ -56,5 +57,11 @@ namespace Miralis{
 	private:
 		Event& m_Event;
 	};
-	
+
+	inline std::ostream& operator<<(std::ostream& os, const Event& e)
+	{
+		return os << e.ToString();
+	}
+
+
 }

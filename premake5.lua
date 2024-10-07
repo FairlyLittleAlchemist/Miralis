@@ -33,7 +33,8 @@ project "Miralis"
 
 	links
 	{
-		"GLFW"
+		"GLFW",
+		"opengl32"  
 	}
 
    filter "system:windows"

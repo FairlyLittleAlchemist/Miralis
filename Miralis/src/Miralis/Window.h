@@ -16,7 +16,7 @@ namespace Miralis {
 
 	class MIRALIS_API Window {
 	public:
-		using EventCallBackFn = std::function<bool(Event&)>;
+		using EventCallBackFn = std::function<void(Event&)>;
 		virtual ~Window() {};
 		virtual inline unsigned int  getWidth() const = 0;
 		virtual inline unsigned int  getHiegt() const = 0;

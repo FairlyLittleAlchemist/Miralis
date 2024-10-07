@@ -4,3 +4,6 @@
 [submodule "Miralis/vendor/GLFW"]
 	path = Miralis/vendor/GLFW
 	url = https://github.com/glfw/glfw.git
+[submodule "Miralis/vendor/imgui"]
+	path = Miralis/vendor/imgui
+	url = https://github.com/ocornut/imgui.git

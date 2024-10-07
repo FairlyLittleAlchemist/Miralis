@@ -1,5 +1,5 @@
 #pragma once
-#include "Core.h"
+#include "Miralis/Core.h"
 #include "Miralis/Events/Event.h"
 #include <sstream>
 namespace  Miralis{
