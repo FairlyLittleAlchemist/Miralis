@@ -1,7 +1,7 @@
 #include "Application.h"
 #include "Log.h"
 #include <iostream>
-
+#include<iostream>
 
 namespace Miralis {
 	Application::Application() {
@@ -28,6 +28,7 @@ namespace Miralis {
 	void Application::OnEvent(Event& e) {
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindwClose, this, std::placeholders::_1));
+		MR_LOG_CORE_INFO(e.ToString())
 
 	}
 }

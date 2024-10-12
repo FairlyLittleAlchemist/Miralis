@@ -8,6 +8,7 @@ workspace "Miralis"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 includedir ={}
 includedir["GLFW"] = "Miralis/vendor/GLFW/include"
+includedir["Vulkan"] = "$(VULKAN_SDK)/Include"
 include "Miralis/vendor/GLFW"
 project "Miralis"
       location "Miralis"
@@ -27,14 +28,16 @@ project "Miralis"
 	{
 		"%{prj.name}/src",
 		includedir["GLFW"],
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/vendor/spdlog/include",
+		includedir["Vulkan"],
 	}
 
-
+	libdirs { "$(VULKAN_SDK)/Lib" }
 	links
 	{
 		"GLFW",
-		"opengl32"  
+		"opengl32"  ,
+		"vulkan-1" 
 	}
 
    filter "system:windows"
@@ -54,7 +57,7 @@ project "Miralis"
    }
 
    filter "configurations:Debug"
-   defines {"MR_DEBUG","MR_ENABLE_ASSERT"}
+   defines {"MR_DEBUG","MR_ENABLE_ASSERT","FMT_USE_OSTREAM" }
    symbols "On"
 
 	filter "configurations:Release"
@@ -101,7 +104,7 @@ project "Miralis"
 		}
 
 	filter "configurations:Debug"
-	defines {"MR_DEBUG","MR_ENABLE_ASSERT"}
+	defines {"MR_DEBUG","MR_ENABLE_ASSERT","FMT_USE_OSTREAM" }
 	symbols "On"
 
 	filter "configurations:Release"

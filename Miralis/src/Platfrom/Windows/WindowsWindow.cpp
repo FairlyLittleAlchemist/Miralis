@@ -6,6 +6,7 @@
 namespace Miralis{
 static bool s_GLFWInilized = false;
 Window* Window::Create(const WindowProps& props) {
+
 		return new WindowsWindow(props);
 }
 
@@ -46,7 +47,6 @@ void WindowsWindow::Init(const WindowProps& props){
 		s_GLFWInilized = true;
 		glfwSetErrorCallback(GlfwErrorCallBack);
 	}
-
 	m_Window = glfwCreateWindow((int)props.Width, (int)props.Hight, m_Data.Name.c_str(), nullptr, nullptr);
 	glfwMakeContextCurrent(m_Window);
 	glfwSetWindowUserPointer(m_Window, &m_Data);

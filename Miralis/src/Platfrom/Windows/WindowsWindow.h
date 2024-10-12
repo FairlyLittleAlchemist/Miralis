@@ -7,7 +7,7 @@ class WindowsWindow : public Window
 {
 public:
 	WindowsWindow(const WindowProps& props);
-
+	
 	virtual ~WindowsWindow() override;
 	void OnUpdate() override;
 	
