@@ -2,7 +2,7 @@
 #include "Miralis/Window.h"
 #include "Miralis/Log.h"
 #include "GLFW/glfw3.h"
-namespace Miralis {
+	namespace Miralis {
 class WindowsWindow : public Window
 {
 public:
@@ -16,7 +16,7 @@ public:
 	void inline SetEventClassBack(const EventCallBackFn& fnc) { m_Data.EventCallBack = fnc; };
 	bool  inline IsVSync() const override { return m_Data.VSync; } ;
 
-
+	inline GLFWwindow* getWindow() { return m_Window; };
 	void SetVSync(bool enabled) override;
 private:
 	virtual void Init(const WindowProps& pors);

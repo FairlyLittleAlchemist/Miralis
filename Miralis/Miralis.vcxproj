@@ -46,7 +46,7 @@
     <IntDir>..\bin-int\Debug-windows-x86_64\Miralis\</IntDir>
     <TargetName>Miralis</TargetName>
     <TargetExt>.dll</TargetExt>
-    <ExternalIncludePath>src;vendor\GLFW\include;vendor\spdlog\include;$(VULKAN_SDK)\Include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>src;vendor\GLFW\include;vendor\spdlog\include;$(VULKAN_SDK)\Include;vendor\imgui;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -54,7 +54,7 @@
     <IntDir>..\bin-int\Release-windows-x86_64\Miralis\</IntDir>
     <TargetName>Miralis</TargetName>
     <TargetExt>.dll</TargetExt>
-    <ExternalIncludePath>src;vendor\GLFW\include;vendor\spdlog\include;$(VULKAN_SDK)\Include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>src;vendor\GLFW\include;vendor\spdlog\include;$(VULKAN_SDK)\Include;vendor\imgui;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -113,22 +113,30 @@
     <ClInclude Include="src\Miralis\Events\Event.h" />
     <ClInclude Include="src\Miralis\Events\KeyEvent.h" />
     <ClInclude Include="src\Miralis\Events\MouseEvent.h" />
+    <ClInclude Include="src\Miralis\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Miralis\Layer.h" />
     <ClInclude Include="src\Miralis\LayerStack.h" />
     <ClInclude Include="src\Miralis\Log.h" />
     <ClInclude Include="src\Miralis\Window.h" />
+    <ClInclude Include="src\Platfrom\Vulkan\ImGuiVulkanInit.h" />
+    <ClInclude Include="src\Platfrom\Vulkan\ImGuiVulkanRenderer.h" />
     <ClInclude Include="src\Platfrom\Windows\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Miralis\Application.cpp" />
+    <ClCompile Include="src\Miralis\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Miralis\Layer.cpp" />
     <ClCompile Include="src\Miralis\LayerStack.cpp" />
     <ClCompile Include="src\Miralis\Log.cpp" />
+    <ClCompile Include="src\Platfrom\Vulkan\ImGuiVulkanRenderer.cpp" />
     <ClCompile Include="src\Platfrom\Windows\WindowsWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">
       <Project>{154B857C-0182-860D-AA6E-6C109684020F}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\imgui\ImGui.vcxproj">
+      <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

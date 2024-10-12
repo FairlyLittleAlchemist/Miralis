@@ -9,7 +9,11 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 includedir ={}
 includedir["GLFW"] = "Miralis/vendor/GLFW/include"
 includedir["Vulkan"] = "$(VULKAN_SDK)/Include"
+includedir["ImGui"] = "Miralis/vendor/imgui"
+
 include "Miralis/vendor/GLFW"
+include "Miralis/vendor/imgui"
+
 project "Miralis"
       location "Miralis"
       kind "SharedLib"
@@ -30,6 +34,7 @@ project "Miralis"
 		includedir["GLFW"],
 		"%{prj.name}/vendor/spdlog/include",
 		includedir["Vulkan"],
+		includedir["ImGui"]
 	}
 
 	libdirs { "$(VULKAN_SDK)/Lib" }
@@ -37,7 +42,8 @@ project "Miralis"
 	{
 		"GLFW",
 		"opengl32"  ,
-		"vulkan-1" 
+		"vulkan-1" ,
+		"ImGui"
 	}
 
    filter "system:windows"

@@ -4,7 +4,9 @@
 #include<iostream>
 
 namespace Miralis {
+	Application* Application::s_Instance = nullptr;
 	Application::Application() {
+		s_Instance = this;
 		Miralis::Log::Init();
 		m_Window = std::unique_ptr<Window> (Window::Create());
 		m_Window->SetEventClassBack(std::bind(&Application::OnEvent, this, std::placeholders::_1));

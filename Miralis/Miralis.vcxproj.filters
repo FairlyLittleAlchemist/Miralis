@@ -7,8 +7,14 @@
     <Filter Include="Miralis\Events">
       <UniqueIdentifier>{3A58BA29-2626-AE2F-0FBA-1E56FB268A94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Miralis\ImGui">
+      <UniqueIdentifier>{C0EE9D5E-2CAF-1995-F5E9-621261695E71}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Platfrom">
       <UniqueIdentifier>{8AD388B4-76A0-E3BF-9FB9-D1678BE5184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platfrom\Vulkan">
+      <UniqueIdentifier>{CA4189DC-36CD-F6A0-3FDE-7995ABE852A1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Platfrom\Windows">
       <UniqueIdentifier>{C467CE9E-B060-EDF0-D992-D275C5EACCFC}</UniqueIdentifier>
@@ -37,6 +43,9 @@
     <ClInclude Include="src\Miralis\Events\MouseEvent.h">
       <Filter>Miralis\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Miralis\ImGui\ImGui.h">
+      <Filter>Miralis\ImGui</Filter>
+    </ClInclude>
     <ClInclude Include="src\Miralis\Layer.h">
       <Filter>Miralis</Filter>
     </ClInclude>
@@ -49,6 +58,9 @@
     <ClInclude Include="src\Miralis\Window.h">
       <Filter>Miralis</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platfrom\Vulkan\imgui_impl_vulkan.h">
+      <Filter>Platfrom\Vulkan</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platfrom\Windows\WindowsWindow.h">
       <Filter>Platfrom\Windows</Filter>
     </ClInclude>
@@ -56,6 +68,9 @@
   <ItemGroup>
     <ClCompile Include="src\Miralis\Application.cpp">
       <Filter>Miralis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Miralis\ImGui\ImGui.cpp">
+      <Filter>Miralis\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Miralis\Layer.cpp">
       <Filter>Miralis</Filter>
@@ -65,6 +80,9 @@
     </ClCompile>
     <ClCompile Include="src\Miralis\Log.cpp">
       <Filter>Miralis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platfrom\Vulkan\imgui_impl_vulkan.cpp">
+      <Filter>Platfrom\Vulkan</Filter>
     </ClCompile>
     <ClCompile Include="src\Platfrom\Windows\WindowsWindow.cpp">
       <Filter>Platfrom\Windows</Filter>
