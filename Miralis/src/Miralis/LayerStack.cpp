@@ -6,6 +6,13 @@ namespace Miralis {
 		m_LayerInsert = m_Layers.begin();
 	}
 
+	LayerStack::~LayerStack()
+	{
+		for (Layer* layer : m_Layers) {
+			delete layer;
+		}
+	}
+
 
 	void LayerStack::pushLayer(Layer* layer)
 	{

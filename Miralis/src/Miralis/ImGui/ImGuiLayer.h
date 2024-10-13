@@ -1,8 +1,8 @@
 #pragma once
 #include "Miralis/Layer.h"
-
+#include"Miralis/Core.h"
 namespace Miralis {
-	class ImGuiLayer : public Layer {
+	class MIRALIS_API ImGuiLayer : public Layer {
 	public:
 		ImGuiLayer();
 		~ImGuiLayer();
@@ -11,5 +11,6 @@ namespace Miralis {
 		void OnUpdate() ;
 		void OnEvent(Event& event);
 	private:
+		float m_Time = 0.0f;
 	};
 }

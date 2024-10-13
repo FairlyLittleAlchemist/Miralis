@@ -63,7 +63,7 @@
       <PreprocessorDefinitions>MR_PLATFORM_WINDOWS;MR_BUILD_DLL;MR_DEBUG;MR_ENABLE_ASSERT;FMT_USE_OSTREAM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>

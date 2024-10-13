@@ -62,9 +62,30 @@ namespace Miralis {
 	}
 	void ImGuiLayer::OnDeAttache()
 	{
+
+ 
 	}
 	void ImGuiLayer::OnUpdate()
 	{
+     
+        ImGuiIO& io = ImGui::GetIO();
+        Application& app = Application::Get();
+        auto& window = dynamic_cast<Miralis::WindowsWindow&>(app.getWindow());
+        io.DisplaySize = ImVec2(window.getWidth() , window.getHiegt());
+        float time = (float)glfwGetTime();
+        io.DeltaTime = m_Time > 0.0 ? (time - m_Time) : (1.0f / 120.0f);
+        m_Time = time;
+        ImGui_ImplVulkan_NewFrame();
+        ImGui::NewFrame();
+     
+        static bool show = true;
+        ImGui::ShowDemoWindow(&show);
+        ImGui::Render();
+
+        ImGui_ImplVulkanH_Window* wd = &g_MainWindowData;
+        ImDrawData* draw_data = ImGui::GetDrawData();
+        FrameRender(wd, draw_data);
+        FramePresent(wd);
 	}
 	void ImGuiLayer::OnEvent(Event& event)
 	{

@@ -13,8 +13,11 @@ namespace Miralis {
 	};
 	void Application::Run()
 	{
-		while (m_Running) {
-			m_Window->OnUpdate();
+		while(m_Running){
+		for (Layer* layer : m_LayerStack) {
+			layer->OnUpdate();
+		}
+		m_Window->OnUpdate();
 		}
 	};
 	Application::~Application() {
@@ -24,6 +27,16 @@ namespace Miralis {
 		m_Running = false;
 		return true;
 	}
+	void Application::PushLayer(Layer* layer)
+	{
+		m_LayerStack.pushLayer(layer);
+		layer->OnAttache();
+	}
+	void Application::PopLayer(Layer* layer)
+	{
+		m_LayerStack.popLayer(layer);
+
+	}
 	;
 
 
@@ -31,6 +44,11 @@ namespace Miralis {
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindwClose, this, std::placeholders::_1));
 		MR_LOG_CORE_INFO(e.ToString())
-
+			for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
+				(*--it)->OnEvent(e);
+				if (e.Handeld) {
+					break;
+				}
+			}
 	}
 }

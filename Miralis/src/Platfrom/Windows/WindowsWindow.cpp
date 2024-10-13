@@ -47,8 +47,8 @@ void WindowsWindow::Init(const WindowProps& props){
 		s_GLFWInilized = true;
 		glfwSetErrorCallback(GlfwErrorCallBack);
 	}
+	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 	m_Window = glfwCreateWindow((int)props.Width, (int)props.Hight, m_Data.Name.c_str(), nullptr, nullptr);
-	glfwMakeContextCurrent(m_Window);
 	glfwSetWindowUserPointer(m_Window, &m_Data);
 
 

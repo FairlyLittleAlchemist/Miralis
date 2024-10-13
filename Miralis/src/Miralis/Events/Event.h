@@ -32,8 +32,9 @@ namespace Miralis{
 		inline bool IsInCategory(EventCategory category) {
 			return GetCategoryFlags() & category;
 		}
-	protected:
-		bool m_Handeld = false;
+		bool Handeld = false;
+
+
 	};
 
 	class EventDispatcher {
