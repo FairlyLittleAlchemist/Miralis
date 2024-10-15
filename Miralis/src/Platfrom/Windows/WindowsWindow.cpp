@@ -11,7 +11,7 @@ Window* Window::Create(const WindowProps& props) {
 }
 
 static void GlfwErrorCallBack(int error_code, const char* description) {
-	MR_LOG_CORE_ERROR("Code:{0} Description:{0}", error_code , description)
+	MR_LOG_CORE_ERROR("Code:{0} Description:{1}", error_code , description)
 };
 
 WindowsWindow::WindowsWindow(const WindowProps& props){
@@ -24,7 +24,7 @@ WindowsWindow::~WindowsWindow(){
 
 void WindowsWindow::OnUpdate(){
 	glfwPollEvents();
-	glfwSwapBuffers(m_Window);
+	
 }
 
 void WindowsWindow::SetVSync(bool enabled){

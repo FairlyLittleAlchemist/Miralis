@@ -67,6 +67,8 @@ namespace Miralis {
 	}
 	void ImGuiLayer::OnUpdate()
 	{
+
+
      
         ImGuiIO& io = ImGui::GetIO();
         Application& app = Application::Get();

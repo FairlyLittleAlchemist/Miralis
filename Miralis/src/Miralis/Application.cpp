@@ -42,8 +42,8 @@ namespace Miralis {
 
 	void Application::OnEvent(Event& e) {
 		EventDispatcher dispatcher(e);
+	
 		dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindwClose, this, std::placeholders::_1));
-		MR_LOG_CORE_INFO(e.ToString())
 			for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
 				(*--it)->OnEvent(e);
 				if (e.Handeld) {
