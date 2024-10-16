@@ -11,7 +11,7 @@ namespace Miralis {
 		unsigned int Width;
 		unsigned int Hight;
 	public:
-		WindowProps(std::string name = "Miralis" , unsigned int width = 800 , unsigned int hight = 600 ) :Name(name), Width(width), Hight(hight) {}
+		WindowProps(std::string name = "Miralis" , unsigned int width = 800*2 , unsigned int hight = 600*2 ) :Name(name), Width(width), Hight(hight) {}
 	};
 
 	class MIRALIS_API Window {

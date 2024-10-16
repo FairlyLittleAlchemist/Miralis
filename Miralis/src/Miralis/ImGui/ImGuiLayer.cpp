@@ -35,9 +35,11 @@ namespace Miralis {
         // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
-        ImGuiIO& io = ImGui::GetIO(); (void)io;
-        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-        io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+        ImGuiIO& io = ImGui::GetIO();
+        io.BackendFlags |=ImGuiBackendFlags_HasMouseCursors ;
+        io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
+        
+
 
         // Setup Dear ImGui style
         ImGui::StyleColorsDark();
@@ -59,6 +61,8 @@ namespace Miralis {
         init_info.Allocator = g_Allocator;
         init_info.CheckVkResultFn = check_vk_result;
         ImGui_ImplVulkan_Init(&init_info);
+
+        MR_LOG_CLIENT_TRACE("Render Start");
 	}
 	void ImGuiLayer::OnDeAttache()
 	{
@@ -89,7 +93,80 @@ namespace Miralis {
         FrameRender(wd, draw_data);
         FramePresent(wd);
 	}
-	void ImGuiLayer::OnEvent(Event& event)
-	{
-	}
+
+    void ImGuiLayer::OnEvent(Event& event)
+    {
+        EventDispatcher dispatcher(event);
+        dispatcher.Dispatch<MouseButtonPressedEvent>(std::bind(&ImGuiLayer::OnMouseButtonPressed, this, std::placeholders::_1));
+        dispatcher.Dispatch<MouseButtonRealsedssedEvent>(std::bind(&ImGuiLayer::OnMouseButtonRealsed, this, std::placeholders::_1));
+        dispatcher.Dispatch<MouseMovedEvent>(std::bind(&ImGuiLayer::OnMouseMove, this, std::placeholders::_1));
+        dispatcher.Dispatch<MouseScrolledEvent>(std::bind(&ImGuiLayer::OnMouseScroll, this, std::placeholders::_1));
+        dispatcher.Dispatch<KeyPressedEvent>(std::bind(&ImGuiLayer::OnKeyPressed, this, std::placeholders::_1));
+        dispatcher.Dispatch<KeyReleasedEvent>(std::bind(&ImGuiLayer::OnKeyRealsed, this, std::placeholders::_1));
+        dispatcher.Dispatch<WindowResizeEvent>(std::bind(&ImGuiLayer::OnWindowResize, this, std::placeholders::_1));
+
+
+    }
+
+    bool ImGuiLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        io.MouseDown[e.getMouseButton()] = true;
+        return false;
+    }
+
+    bool ImGuiLayer::OnMouseButtonRealsed(MouseButtonRealsedssedEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        io.MouseDown[e.getMouseButton()] = false;
+        return false;
+    }
+
+    bool ImGuiLayer::OnMouseMove(MouseMovedEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        io.MousePos = ImVec2(e.GetX(), e.GetY());
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnMouseScroll(MouseScrolledEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        io.MouseWheelH += e.GetXOffest();
+        io.MouseWheel += e.GetYOffest();
+        return false;
+    }
+
+    bool ImGuiLayer::OnKeyPressed(KeyPressedEvent& e)
+    {
+        MR_LOG_CORE_INFO("KeyPressed {0}", e.ToString())
+       ImGuiIO& io = ImGui::GetIO();
+       io.KeysDown[e.getKeyCode()] = true;
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnKeyRealsed(KeyReleasedEvent& e)
+    {
+        MR_LOG_CORE_INFO("KeyRealsed {0}", e.ToString())
+
+        ImGuiIO& io = ImGui::GetIO();
+        io.KeysDown[e.getKeyCode()] = false;
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnWindowResize(WindowResizeEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        io.DisplaySize = ImVec2(e.getWidth(), e.getHight());
+        io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
+        ImGui_ImplVulkan_SetMinImageCount(g_MinImageCount);
+        ImGui_ImplVulkanH_CreateOrResizeWindow(g_Instance, g_PhysicalDevice, g_Device, &g_MainWindowData, g_QueueFamily, g_Allocator, e.getWidth(), e.getHight(), g_MinImageCount);
+        g_MainWindowData.FrameIndex = 0;
+        g_SwapChainRebuild = false;
+        return false;
+    }
+
 }

@@ -28,6 +28,8 @@ namespace Miralis {
 			ss << "MouseScrolledEvent: " << m_OffsetX << ", " << m_OffsetY;
 			return ss.str();
 		}
+		inline float GetXOffest() { return m_OffsetX; };
+		inline float GetYOffest() { return m_OffsetY; };
 		EVENT_CLASS_TYPE(MouseScrolled)
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 	private:
@@ -37,7 +39,9 @@ namespace Miralis {
 
 
 	class MIRALIS_API MouseButtonEvent : public Event {
+	public:
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+		inline int	getMouseButton() { return m_Button; };
 	protected:
 		MouseButtonEvent(int button) : m_Button(button) { ; };
 		int m_Button;
