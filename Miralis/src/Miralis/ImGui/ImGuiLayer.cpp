@@ -1,9 +1,14 @@
-#include "imgui.h"
 #include "ImGuiLayer.h"
 #include"Platfrom/Vulkan/ImGuiVulkanRenderer.h"
 #include"Platfrom/Vulkan/ImGuiVulkanInit.h"
 #include"Miralis/Application.h"
+#include "imgui.h"
+
 namespace Miralis {
+
+
+
+
 	ImGuiLayer::ImGuiLayer(): Layer("GUI Lyaer")
 	{
 	}
@@ -36,11 +41,30 @@ namespace Miralis {
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
         ImGuiIO& io = ImGui::GetIO();
-        io.BackendFlags |=ImGuiBackendFlags_HasMouseCursors ;
-        io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
-        
+        io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
+        io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;        
 
-
+        io.KeyMap[ImGuiKey_Tab] = GLFW_KEY_TAB;
+        io.KeyMap[ImGuiKey_LeftArrow] = GLFW_KEY_LEFT;
+        io.KeyMap[ImGuiKey_RightArrow] = GLFW_KEY_RIGHT;
+        io.KeyMap[ImGuiKey_UpArrow] = GLFW_KEY_UP;
+        io.KeyMap[ImGuiKey_DownArrow] = GLFW_KEY_DOWN;
+        io.KeyMap[ImGuiKey_PageUp] = GLFW_KEY_PAGE_UP;
+        io.KeyMap[ImGuiKey_PageDown] = GLFW_KEY_PAGE_DOWN;
+        io.KeyMap[ImGuiKey_Home] = GLFW_KEY_HOME;
+        io.KeyMap[ImGuiKey_End] = GLFW_KEY_END;
+        io.KeyMap[ImGuiKey_Insert] = GLFW_KEY_INSERT;
+        io.KeyMap[ImGuiKey_Delete] = GLFW_KEY_DELETE;
+        io.KeyMap[ImGuiKey_Backspace] = GLFW_KEY_BACKSPACE;
+        io.KeyMap[ImGuiKey_Space] = GLFW_KEY_SPACE;
+        io.KeyMap[ImGuiKey_Enter] = GLFW_KEY_ENTER;
+        io.KeyMap[ImGuiKey_Escape] = GLFW_KEY_ESCAPE;
+        io.KeyMap[ImGuiKey_A] = GLFW_KEY_A;
+        io.KeyMap[ImGuiKey_C] = GLFW_KEY_C;
+        io.KeyMap[ImGuiKey_V] = GLFW_KEY_V;
+        io.KeyMap[ImGuiKey_X] = GLFW_KEY_X;
+        io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
+        io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
         // Setup Dear ImGui style
         ImGui::StyleColorsDark();
         //ImGui::StyleColorsLight();
@@ -104,6 +128,7 @@ namespace Miralis {
         dispatcher.Dispatch<KeyPressedEvent>(std::bind(&ImGuiLayer::OnKeyPressed, this, std::placeholders::_1));
         dispatcher.Dispatch<KeyReleasedEvent>(std::bind(&ImGuiLayer::OnKeyRealsed, this, std::placeholders::_1));
         dispatcher.Dispatch<WindowResizeEvent>(std::bind(&ImGuiLayer::OnWindowResize, this, std::placeholders::_1));
+        dispatcher.Dispatch<KeyTypedEvent>(std::bind(&ImGuiLayer::OnKeyTyped, this, std::placeholders::_1));
 
 
     }
@@ -140,20 +165,28 @@ namespace Miralis {
 
     bool ImGuiLayer::OnKeyPressed(KeyPressedEvent& e)
     {
-        MR_LOG_CORE_INFO("KeyPressed {0}", e.ToString())
        ImGuiIO& io = ImGui::GetIO();
-       io.KeysDown[e.getKeyCode()] = true;
+        io.KeysDown[e.getKeyCode()] = true;
+
+        io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
+        io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
+        io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
+        io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
 
         return false;
     }
 
     bool ImGuiLayer::OnKeyRealsed(KeyReleasedEvent& e)
     {
-        MR_LOG_CORE_INFO("KeyRealsed {0}", e.ToString())
-
         ImGuiIO& io = ImGui::GetIO();
         io.KeysDown[e.getKeyCode()] = false;
+        return false;
+    }
 
+    bool ImGuiLayer::OnKeyTyped(KeyTypedEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        io.AddInputCharacter(e.getKeyCode());
         return false;
     }
 
@@ -169,4 +202,5 @@ namespace Miralis {
         return false;
     }
 
+  
 }

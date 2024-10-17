@@ -7,7 +7,7 @@ namespace Miralis{
 		None=0,
 		WindowClosed,WindowResize,WindowFoucs,WindowLostFoucs,WindowMoved,
 		AppTick,AppUpdate,AppRender,
-		KeyPressed,KeyReleased,
+		KeyPressed,KeyReleased, KeyTyped,
 		MouseButtonPressed,MouseButtonRealsed,MouseMoved,MouseScrolled
 	};
 	enum EventCategory {

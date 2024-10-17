@@ -86,7 +86,11 @@ void WindowsWindow::Init(const WindowProps& props){
 		data.EventCallBack(event);
 		});
 
-
+	glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode) {
+		windowData& data = *(windowData*)glfwGetWindowUserPointer(window);
+		KeyTypedEvent event(keycode);
+		data.EventCallBack(event);
+		});
 	glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xoffset, double yoffset) {
 
 		windowData& data = *(windowData*)glfwGetWindowUserPointer(window);
