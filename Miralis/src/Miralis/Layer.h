@@ -1,6 +1,7 @@
 #pragma once
 #include"Core.h"
 #include <string>
+#include <vector>
 #include"Events/Event.h"
 namespace Miralis{
 class MIRALIS_API Layer

@@ -2,6 +2,8 @@
 #include "Miralis/Window.h"
 #include "Miralis/Log.h"
 #include "GLFW/glfw3.h"
+#define GLFW_EXPOSE_NATIVE_WIN32
+#include <GLFW/glfw3native.h>
 	namespace Miralis {
 class WindowsWindow : public Window
 {

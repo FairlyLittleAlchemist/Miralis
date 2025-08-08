@@ -10,6 +10,15 @@
     <Filter Include="Miralis\ImGui">
       <UniqueIdentifier>{C0EE9D5E-2CAF-1995-F5E9-621261695E71}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Miralis\Rendering">
+      <UniqueIdentifier>{E31D388E-4F34-3624-98AB-C145040107AC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Miralis\Shaders">
+      <UniqueIdentifier>{EF5BBE75-5BE7-2B3A-64F8-AE2ED002883A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Miralis\Shaders\Inside">
+      <UniqueIdentifier>{5AD960A0-46D3-89F2-2F40-20031BD9EF5E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Platfrom">
       <UniqueIdentifier>{8AD388B4-76A0-E3BF-9FB9-D1678BE5184E}</UniqueIdentifier>
     </Filter>
@@ -43,6 +52,9 @@
     <ClInclude Include="src\Miralis\Events\MouseEvent.h">
       <Filter>Miralis\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Miralis\ImGui\ImGuiLayer.h">
+      <Filter>Miralis\ImGui</Filter>
+    </ClInclude>
     <ClInclude Include="src\Miralis\Layer.h">
       <Filter>Miralis</Filter>
     </ClInclude>
@@ -52,19 +64,25 @@
     <ClInclude Include="src\Miralis\Log.h">
       <Filter>Miralis</Filter>
     </ClInclude>
+    <ClInclude Include="src\Miralis\Rendering\GrapghicsContext.h">
+      <Filter>Miralis\Rendering</Filter>
+    </ClInclude>
     <ClInclude Include="src\Miralis\Window.h">
       <Filter>Miralis</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platfrom\Vulkan\VulkanContext.h">
+      <Filter>Platfrom\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="src\Platfrom\Windows\WindowsWindow.h">
       <Filter>Platfrom\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="src\Miralis\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\Platfrom\Vulkan\ImGuiVulkanInit.h" />
-    <ClInclude Include="src\Platfrom\Vulkan\ImGuiVulkanRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Miralis\Application.cpp">
       <Filter>Miralis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Miralis\ImGui\ImGuiLayer.cpp">
+      <Filter>Miralis\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Miralis\Layer.cpp">
       <Filter>Miralis</Filter>
@@ -75,10 +93,20 @@
     <ClCompile Include="src\Miralis\Log.cpp">
       <Filter>Miralis</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platfrom\Vulkan\VulkanContext.cpp">
+      <Filter>Platfrom\Vulkan</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platfrom\Windows\WindowsWindow.cpp">
       <Filter>Platfrom\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\Miralis\ImGui\ImGuiLayer.cpp" />
-    <ClCompile Include="src\Platfrom\Vulkan\ImGuiVulkanRenderer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Miralis\Shaders\Inside\shader.frag">
+      <Filter>Miralis\Shaders\Inside</Filter>
+    </None>
+    <None Include="src\Miralis\Shaders\Vertex\triangle.vert">
+      <Filter>Miralis\Shaders</Filter>
+    </None>
+    <None Include="src\Miralis\Shaders\Fragment\triangle.frag" />
   </ItemGroup>
 </Project>

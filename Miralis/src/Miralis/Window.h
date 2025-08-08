@@ -1,7 +1,8 @@
 #pragma once
 #include "Core.h"
 #include "Events/Event.h"
-#include "string.h"
+#include "Miralis/Rendering/GrapghicsContext.h"
+#include <string.h>
 #include<functional>
 
 namespace Miralis {
@@ -10,6 +11,7 @@ namespace Miralis {
 		std::string Name;
 		unsigned int Width;
 		unsigned int Hight;
+		bool isMinimized;
 	public:
 		WindowProps(std::string name = "Miralis" , unsigned int width = 800*2 , unsigned int hight = 600*2 ) :Name(name), Width(width), Hight(hight) {}
 	};
@@ -25,5 +27,9 @@ namespace Miralis {
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync() const = 0;
 		static Window* Create(const WindowProps& prop = WindowProps());
+	protected:
+		std::unique_ptr<GraphicsContext> m_Context;
+
 	};
+
 }
