@@ -13,14 +13,20 @@
 #include <limits> 
 #include <algorithm> 
 #include "Miralis/Window.h"
+#include "imgui.h"
+#include "Platfrom/ImGUI/Vulkan/imgui_impl_vulkan.h"
+#include "Platfrom/ImGUI/Windows/imgui_impl_glfw.h"
+
+
 struct  GLFWwindow;
 namespace Miralis {
 	class VulkanContext : public GraphicsContext {
 	public :
-		VulkanContext(void * windowHandel, const WindowProps* props);
+		VulkanContext(void* windowHandel, const WindowProps* props, GLFWwindow* Window);
 		~VulkanContext();
 		virtual void Init() override;
 		virtual void SwapBuffers() override;
+		void ImGUINewFrame() override;
 
 	private:
 	#ifdef MR_DEBUG
@@ -126,9 +132,12 @@ namespace Miralis {
 		const WindowProps* m_props;
 		int MAX_FRAMES_IN_FLIGHT = 2;
 		uint32_t currentFrame = 0;
+		ImGui_ImplVulkanH_Window g_MainWindowData;
+
 
 
 	private:
+		GLFWwindow* m_Window;
 		void initIMGUI();
 		struct QueueFamilyIndices {
 			std::optional<uint32_t> graphicsFamily;
@@ -159,8 +168,10 @@ namespace Miralis {
 		void createGraphicsPipeline();
 		std::vector<char> readFile(const std::string& filename);
 		VkShaderModule createShaderModule(const std::vector<char>& code);
-		ImGui_ImplVulkanH_Window g_MainWindowData;
-
+		VkDescriptorPool g_DescriptorPool;
+		uint32_t imageCount; 
+		ImDrawData* draw_data;
+		ImGuiIO* io;
 		void createRenderPass();
 		void createFramebuffers();
 		void createCommandPool();
@@ -172,5 +183,7 @@ namespace Miralis {
 		void DestroySyncObjects();
 		void recreateSwapChain();
 		void cleanupSwapChain();
+		void createDescriptorPool();
+		bool show_demo_window = true;
 	};
 }

@@ -4,13 +4,14 @@
 #include "Miralis/Log.h"
 #include <filesystem>
 #include "imgui.h"
-#include "Platfrom/ImGUI/Windows/imgui_impl_glfw.h"
-#include "Platfrom/ImGUI/Vulkan/imgui_impl_vulkan.h"
+
 namespace Miralis {
 
 	
-	VulkanContext::VulkanContext(void * windowHandel,const WindowProps* props)
+	Miralis::VulkanContext::VulkanContext(void* windowHandel, const WindowProps* props, GLFWwindow* Window)
 	{
+		io = nullptr;
+		m_Window = Window;
 		m_props = props;
 		m_WindowHandel = windowHandel;
 		instance = nullptr; 
@@ -56,6 +57,8 @@ namespace Miralis {
 		createCommandPool();
 		createCommandBuffers();
 		createSyncObjects();
+		createDescriptorPool();
+		initIMGUI();
 	}
 	void VulkanContext::SwapBuffers()
 	{
@@ -178,56 +181,80 @@ namespace Miralis {
 		return indices;
 	}
 
-	void VulkanContext::initIMGUI()
-	{
-		int w, h;
-
-		g_MainWindowData.Surface = surface;
-		g_MainWindowData.SurfaceFormat.format = swapChainImageFormat;
-		g_MainWindowData.SurfaceFormat.colorSpace = VK_COLORSPACE_SRGB_NONLINEAR_KHR;
-		g_MainWindowData.PresentMode = VK_PRESENT_MODE_FIFO_KHR;
-		g_MainWindowData.Swapchain = swapChain;
-		g_MainWindowData.Width = swapChainExtent.width;
-		g_MainWindowData.Height = swapChainExtent.height;
-
-		IMGUI_CHECKVERSION();
-		ImGui::CreateContext();
-		ImGuiIO& io = ImGui::GetIO(); (void)io;
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
-		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
-		ImGui::StyleColorsDark();
-		ImGuiStyle& style = ImGui::GetStyle();
-		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		void VulkanContext::initIMGUI()
 		{
-			style.WindowRounding = 0.0f;
-			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+
+			g_MainWindowData.Surface = surface;
+			g_MainWindowData.SurfaceFormat.format = swapChainImageFormat;
+			g_MainWindowData.SurfaceFormat.colorSpace = VK_COLORSPACE_SRGB_NONLINEAR_KHR;
+			g_MainWindowData.PresentMode = VK_PRESENT_MODE_FIFO_KHR;
+			g_MainWindowData.Swapchain = swapChain;
+			g_MainWindowData.Width = swapChainExtent.width;
+			g_MainWindowData.Height = swapChainExtent.height;
+			IMGUI_CHECKVERSION();
+			ImGui::CreateContext();
+			ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+
+			io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+			io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+			io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+			io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
+			ImGui::StyleColorsDark();
+			ImGuiStyle& style = ImGui::GetStyle();
+			if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+			{
+				style.WindowRounding = 0.0f;
+				style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+			}
+			ImGui_ImplGlfw_InitForVulkan(m_Window, true);
+
+
+			ImGui_ImplVulkan_InitInfo init_info = {};
+			//init_info.ApiVersion = VK_API_VERSION_1_3;              // Pass in your value of VkApplicationInfo::apiVersion, otherwise will default to header version.
+			init_info.Instance = instance;
+			init_info.PhysicalDevice = physicalDevice;
+			init_info.Device = device;
+			init_info.QueueFamily = 0;
+			init_info.Queue = graphicsQueue;
+			init_info.PipelineCache = NULL;
+			init_info.DescriptorPool = g_DescriptorPool;
+			init_info.RenderPass = renderPass;
+			init_info.Subpass = 0;
+			init_info.MinImageCount = 2;
+			init_info.ImageCount = imageCount;
+			init_info.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
+			init_info.Allocator = NULL;
+			//init_info.CheckVkResultFn = check_vk_result;
+			ImGui_ImplVulkan_Init(&init_info);
+
+			bool show_demo_window = true;
+			bool show_another_window = false;
+			ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+			io = ImGui::GetIO(); (void)io;
+
 		}
-		ImGui_ImplGlfw_InitForVulkan(window, true);
-		ImGui_ImplVulkan_InitInfo init_info = {};
-		//init_info.ApiVersion = VK_API_VERSION_1_3;              // Pass in your value of VkApplicationInfo::apiVersion, otherwise will default to header version.
-		init_info.Instance = instance;
-		init_info.PhysicalDevice = physicalDevice;
-		init_info.Device = device;
-		init_info.QueueFamily = 0;
-		init_info.Queue = graphicsQueue;
-		init_info.PipelineCache = NULL;
-		init_info.DescriptorPool = g_DescriptorPool;
-		init_info.RenderPass = renderPass;
-		init_info.Subpass = 0;
-		init_info.MinImageCount = 2;
-		init_info.ImageCount = imageCount;
-		init_info.MSAASamples = msaaSamples;
-		init_info.Allocator = NULL;
-		//init_info.CheckVkResultFn = check_vk_result;
 
-		ImGui_ImplVulkan_Init(&init_info);
+	void VulkanContext::createDescriptorPool()
+	{
+		VkDescriptorPoolSize pool_sizes[] =
+		{
+			{ VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, IMGUI_IMPL_VULKAN_MINIMUM_IMAGE_SAMPLER_POOL_SIZE },
+		};
+		VkDescriptorPoolCreateInfo pool_info = {};
+		pool_info.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+		pool_info.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
+		pool_info.maxSets = 0;
+		for (VkDescriptorPoolSize& pool_size : pool_sizes)
+			pool_info.maxSets += pool_size.descriptorCount;
+		pool_info.poolSizeCount = (uint32_t)IM_ARRAYSIZE(pool_sizes);
+		pool_info.pPoolSizes = pool_sizes;
+		vkCreateDescriptorPool(device, &pool_info, nullptr, &g_DescriptorPool);
+	}
 
-		bool show_demo_window = true;
-		bool show_another_window = false;
-		ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
+	void VulkanContext::ImGUINewFrame()
+	{
+		ImGui_ImplGlfw_NewFrame();
 	}
 
 	bool VulkanContext::checkDeviceExtensionSupport(VkPhysicalDevice device)
@@ -317,7 +344,7 @@ namespace Miralis {
 		VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
 		VkPresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
 		VkExtent2D extent = chooseSwapExtent(swapChainSupport.capabilities);
-		uint32_t imageCount = swapChainSupport.capabilities.minImageCount + 1;
+		imageCount = swapChainSupport.capabilities.minImageCount + 1;
 		if (swapChainSupport.capabilities.maxImageCount > 0 && imageCount > swapChainSupport.capabilities.maxImageCount) {
 			imageCount = swapChainSupport.capabilities.maxImageCount;
 		}
@@ -634,6 +661,8 @@ namespace Miralis {
 		scissor.extent = swapChainExtent;
 		vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
 		vkCmdDraw(commandBuffer, 3, 1, 0, 0);
+		ImGui_ImplVulkan_RenderDrawData(draw_data, commandBuffer);
+
 		vkCmdEndRenderPass(commandBuffer);
 		MR_CORE_ASSERT(vkEndCommandBuffer(commandBuffer) == VK_SUCCESS,"Failed to record Command buffer")
 	}
@@ -659,6 +688,12 @@ namespace Miralis {
 
 	void VulkanContext::drawFrame()
 	{
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+		ImGui::Render();
+		draw_data = ImGui::GetDrawData();
+
+
 		vkWaitForFences(device, 1, &inFlightFences[currentFrame], VK_TRUE, UINT64_MAX);
 
 
@@ -706,7 +741,12 @@ namespace Miralis {
 			recreateSwapChain();
 		}
 		currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
-
+		// Update and Render additional Platform Windows
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		{
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+		}
 	}
 
 	void VulkanContext::DestroySyncObjects()

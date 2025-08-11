@@ -7,3 +7,4 @@
 [submodule "Miralis/vendor/imgui"]
 	path = Miralis/vendor/imgui
 	url = https://github.com/ocornut/imgui.git
+	branch = docking

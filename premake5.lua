@@ -59,6 +59,7 @@ project "Miralis"
        "cd %{wks.location} && compile.bat"
    }
 
+	buildoptions { "/utf-8" }
 
    defines
    {
@@ -109,7 +110,7 @@ project "Miralis"
 
    filter "system:windows"
 		systemversion "latest"
-
+		buildoptions { "/utf-8" }
 		defines
 		{
 			"MR_PLATFORM_WINDOWS"

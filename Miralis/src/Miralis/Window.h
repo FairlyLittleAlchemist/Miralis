@@ -23,6 +23,7 @@ namespace Miralis {
 		virtual inline unsigned int  getWidth() const = 0;
 		virtual inline unsigned int  getHiegt() const = 0;
 		virtual void OnUpdate() =0;
+		virtual void NewFrame() =0;
 		virtual void SetEventClassBack(const EventCallBackFn& fnc) = 0;
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync() const = 0;

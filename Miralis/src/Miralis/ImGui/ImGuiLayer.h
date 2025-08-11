@@ -26,5 +26,6 @@ namespace Miralis {
 
 	private:
 		float m_Time = 0.0f;
+		bool show_demo_window = true;
 	};
 }

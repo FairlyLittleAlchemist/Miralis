@@ -12,7 +12,7 @@ public:
 	
 	virtual ~WindowsWindow() override;
 	void OnUpdate() override;
-	
+	void NewFrame() override;
 	inline unsigned int  getWidth()const override { return m_Data.Width; };
 	inline unsigned int  getHiegt()const  override { return m_Data.Hight; };
 	void inline SetEventClassBack(const EventCallBackFn& fnc) { m_Data.EventCallBack = fnc; };

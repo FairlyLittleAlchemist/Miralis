@@ -14,6 +14,7 @@ namespace Miralis {
 	void Application::Run()
 	{
 		while(m_Running){
+		m_Window->NewFrame();
 		for (Layer* layer : m_LayerStack) {
 			layer->OnUpdate();
 		}

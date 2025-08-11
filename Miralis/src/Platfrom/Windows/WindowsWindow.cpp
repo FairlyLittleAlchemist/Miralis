@@ -27,7 +27,11 @@ WindowsWindow::~WindowsWindow(){
 void WindowsWindow::OnUpdate(){
 	m_Context->SwapBuffers();
 	glfwPollEvents();
-	
+}
+
+void WindowsWindow::NewFrame()
+{
+	m_Context->ImGUINewFrame();
 }
 
 void WindowsWindow::SetVSync(bool enabled){
@@ -52,11 +56,10 @@ void WindowsWindow::Init(const WindowProps& props){
 	}
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 	m_Window = glfwCreateWindow((int)props.Width, (int)props.Hight, m_Data.Name.c_str(), nullptr, nullptr);
-	m_Context = std::make_unique<VulkanContext>((void *)glfwGetWin32Window(m_Window), &props);
+	m_Context = std::make_unique<VulkanContext>((void *)glfwGetWin32Window(m_Window), &props, m_Window);
 	m_Context->Init();
 	glfwSetWindowUserPointer(m_Window, &m_Data);
 	 
-
 	glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos)
 		{
 			windowData& data = *(windowData*)glfwGetWindowUserPointer(window);
@@ -123,6 +126,7 @@ void WindowsWindow::Init(const WindowProps& props){
 		}
 		}
 		});
+		
 }
 
 	void WindowsWindow::ShutDown(){

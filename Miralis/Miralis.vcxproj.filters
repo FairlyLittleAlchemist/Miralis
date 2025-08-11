@@ -16,11 +16,23 @@
     <Filter Include="Miralis\Shaders">
       <UniqueIdentifier>{EF5BBE75-5BE7-2B3A-64F8-AE2ED002883A}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Miralis\Shaders\Inside">
-      <UniqueIdentifier>{5AD960A0-46D3-89F2-2F40-20031BD9EF5E}</UniqueIdentifier>
+    <Filter Include="Miralis\Shaders\Fragment">
+      <UniqueIdentifier>{F2FD0381-DE22-5301-076E-3891F3F1511F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Miralis\Shaders\Vertex">
+      <UniqueIdentifier>{9CAF10BE-88A9-3910-7116-D0205DAF9F7C}</UniqueIdentifier>
     </Filter>
     <Filter Include="Platfrom">
       <UniqueIdentifier>{8AD388B4-76A0-E3BF-9FB9-D1678BE5184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platfrom\ImGUI">
+      <UniqueIdentifier>{F443882C-E011-7C32-C9A5-EC58B5125897}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platfrom\ImGUI\Vulkan">
+      <UniqueIdentifier>{F4D60C20-6043-C81A-2937-60789562EA82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platfrom\ImGUI\Windows">
+      <UniqueIdentifier>{2EA2C452-1A9C-EDA4-0309-84B5EFA15311}</UniqueIdentifier>
     </Filter>
     <Filter Include="Platfrom\Vulkan">
       <UniqueIdentifier>{CA4189DC-36CD-F6A0-3FDE-7995ABE852A1}</UniqueIdentifier>
@@ -70,6 +82,12 @@
     <ClInclude Include="src\Miralis\Window.h">
       <Filter>Miralis</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platfrom\ImGUI\Vulkan\imgui_impl_vulkan.h">
+      <Filter>Platfrom\ImGUI\Vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platfrom\ImGUI\Windows\imgui_impl_glfw.h">
+      <Filter>Platfrom\ImGUI\Windows</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platfrom\Vulkan\VulkanContext.h">
       <Filter>Platfrom\Vulkan</Filter>
     </ClInclude>
@@ -93,6 +111,12 @@
     <ClCompile Include="src\Miralis\Log.cpp">
       <Filter>Miralis</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platfrom\ImGUI\Vulkan\imgui_impl_vulkan.cpp">
+      <Filter>Platfrom\ImGUI\Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platfrom\ImGUI\Windows\imgui_impl_glfw.cpp">
+      <Filter>Platfrom\ImGUI\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platfrom\Vulkan\VulkanContext.cpp">
       <Filter>Platfrom\Vulkan</Filter>
     </ClCompile>
@@ -101,12 +125,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\Miralis\Shaders\Inside\shader.frag">
-      <Filter>Miralis\Shaders\Inside</Filter>
+    <None Include="src\Miralis\Shaders\Fragment\triangle.frag">
+      <Filter>Miralis\Shaders\Fragment</Filter>
     </None>
     <None Include="src\Miralis\Shaders\Vertex\triangle.vert">
-      <Filter>Miralis\Shaders</Filter>
+      <Filter>Miralis\Shaders\Vertex</Filter>
     </None>
-    <None Include="src\Miralis\Shaders\Fragment\triangle.frag" />
   </ItemGroup>
 </Project>
