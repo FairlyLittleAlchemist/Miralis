@@ -8,3 +8,6 @@
 	path = Miralis/vendor/imgui
 	url = https://github.com/ocornut/imgui.git
 	branch = docking
+[submodule "Miralis/vendor/GLM"]
+	path = Miralis/vendor/GLM
+	url = https://github.com/g-truc/glm.git
