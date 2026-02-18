@@ -45,14 +45,14 @@
     <IntDir>..\bin-int\Debug-windows-x86_64\Miralis\</IntDir>
     <TargetName>Miralis</TargetName>
     <TargetExt>.lib</TargetExt>
-    <ExternalIncludePath>src;vendor\GLFW\include;vendor\spdlog\include;$(VULKAN_SDK)\Include;vendor\imgui;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>src;vendor\GLFW\include;vendor\spdlog\include;$(VULKAN_SDK)\Include;vendor\imgui;vendor\VulkanMemoryAllocator\include;vendor\GLM;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>..\bin\Release-windows-x86_64\Miralis\</OutDir>
     <IntDir>..\bin-int\Release-windows-x86_64\Miralis\</IntDir>
     <TargetName>Miralis</TargetName>
     <TargetExt>.lib</TargetExt>
-    <ExternalIncludePath>src;vendor\GLFW\include;vendor\spdlog\include;$(VULKAN_SDK)\Include;vendor\imgui;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>src;vendor\GLFW\include;vendor\spdlog\include;$(VULKAN_SDK)\Include;vendor\imgui;vendor\VulkanMemoryAllocator\include;vendor\GLM;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -119,12 +119,22 @@
     <ClInclude Include="src\Miralis\Layer.h" />
     <ClInclude Include="src\Miralis\LayerStack.h" />
     <ClInclude Include="src\Miralis\Log.h" />
+    <ClInclude Include="src\Miralis\Rendering\Buffers\Buffer.h" />
     <ClInclude Include="src\Miralis\Rendering\GrapghicsContext.h" />
+    <ClInclude Include="src\Miralis\Rendering\PipeLine.h" />
+    <ClInclude Include="src\Miralis\Rendering\RenderCommands.h" />
+    <ClInclude Include="src\Miralis\Rendering\Renderer.h" />
+    <ClInclude Include="src\Miralis\Rendering\RendererAPI.h" />
     <ClInclude Include="src\Miralis\Window.h" />
     <ClInclude Include="src\Platfrom\ImGUI\Vulkan\imgui_impl_vulkan.h" />
     <ClInclude Include="src\Platfrom\ImGUI\Windows\imgui_impl_glfw.h" />
+    <ClInclude Include="src\Platfrom\Vulkan\VulkanBuffer.h" />
     <ClInclude Include="src\Platfrom\Vulkan\VulkanContext.h" />
+    <ClInclude Include="src\Platfrom\Vulkan\VulkanRenderAPI.h" />
     <ClInclude Include="src\Platfrom\Windows\WindowsWindow.h" />
+    <ClInclude Include="src\Platfrom\Vulkan\VulkanPipeLine.h" />
+    <ClInclude Include="src\Miralis\Rendering\Buffers\Vertex\VertexBuffer.h" />
+    <ClInclude Include="src\Miralis\Rendering\Buffers\Uniform\UnifromBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Miralis\Application.cpp" />
@@ -132,10 +142,19 @@
     <ClCompile Include="src\Miralis\Layer.cpp" />
     <ClCompile Include="src\Miralis\LayerStack.cpp" />
     <ClCompile Include="src\Miralis\Log.cpp" />
+    <ClCompile Include="src\Miralis\Rendering\Buffers\Buffer.cpp" />
+    <ClCompile Include="src\Miralis\Rendering\PipeLine.cpp" />
+    <ClCompile Include="src\Miralis\Rendering\RenderCommand.cpp" />
+    <ClCompile Include="src\Miralis\Rendering\Renderer.cpp" />
+    <ClCompile Include="src\Miralis\Rendering\RendererAPI.cpp" />
     <ClCompile Include="src\Platfrom\ImGUI\Vulkan\imgui_impl_vulkan.cpp" />
     <ClCompile Include="src\Platfrom\ImGUI\Windows\imgui_impl_glfw.cpp" />
+    <ClCompile Include="src\Platfrom\Vulkan\VulkanBuffer.cpp" />
     <ClCompile Include="src\Platfrom\Vulkan\VulkanContext.cpp" />
+    <ClCompile Include="src\Platfrom\Vulkan\VulkanRenderAPI.cpp" />
     <ClCompile Include="src\Platfrom\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="src\Platfrom\Vulkan\VulkanShader.cpp" />
+    <ClCompile Include="src\Miralis\Rendering\Buffers\Vertex\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Miralis\Shaders\Fragment\triangle.frag" />

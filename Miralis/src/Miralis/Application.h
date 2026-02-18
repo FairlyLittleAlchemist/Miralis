@@ -5,6 +5,12 @@
 #include"Miralis/LayerStack.h"
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
+#include "Miralis/Rendering//Buffers/Buffer.h"
+#include "Miralis/Rendering/PipeLine.h"
+
+
+
+
 namespace Miralis{
 class MIRALIS_API Application
 {

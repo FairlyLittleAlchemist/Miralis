@@ -1,5 +1,6 @@
  #pragma once
 #define VK_USE_PLATFORM_WIN32_KHR
+
 #include"Miralis/Rendering/GrapghicsContext.h"
 #include"Miralis/Log.h"
 #include"Miralis/core.h"
@@ -16,12 +17,50 @@
 #include "imgui.h"
 #include "Platfrom/ImGUI/Vulkan/imgui_impl_vulkan.h"
 #include "Platfrom/ImGUI/Windows/imgui_impl_glfw.h"
-
-
 struct  GLFWwindow;
 namespace Miralis {
+
+	
 	class VulkanContext : public GraphicsContext {
+	public:
+
+
+	
+		VkDevice device;
+		VkPhysicalDevice physicalDevice;
+		VkInstance instance;
+		std::vector<const char*> deviceExtensions;
+		void* m_WindowHandel;
+		VkQueue graphicsQueue;
+		VkSurfaceKHR surface;
+		VkQueue presentQueue;
+		VkPipeline graphicsPipeline;
+		VkCommandPool commandPool;
+		std::vector<VkCommandBuffer> commandBuffers;
+
+		VkSwapchainKHR swapChain;
+		std::vector<VkImage> swapChainImages;
+		std::vector<VkImageView> swapChainImageViews;
+		VkPipelineLayout pipelineLayout;
+
+		std::vector<VkSemaphore> imageAvailableSemaphores;
+		std::vector<VkSemaphore> renderFinishedSemaphores;
+		std::vector<VkFence> inFlightFences;
+		VkRenderPass renderPass;
+		VkFormat swapChainImageFormat;
+		VkExtent2D swapChainExtent;
+		std::vector<VkFramebuffer> swapChainFramebuffers;
+		const WindowProps* m_props;
+		int MAX_FRAMES_IN_FLIGHT = 2;
+		uint32_t currentFrame = 0;
+		ImGui_ImplVulkanH_Window g_MainWindowData;
+		void recreateSwapChain();
+		uint32_t imageIndex;
+		VkDescriptorPool descriptorPool;
+
+
 	public :
+		
 		VulkanContext(void* windowHandel, const WindowProps* props, GLFWwindow* Window);
 		~VulkanContext();
 		virtual void Init() override;
@@ -103,36 +142,7 @@ namespace Miralis {
 			return VK_FALSE;
 		}
 	#endif 
-		std::vector<const char*> deviceExtensions;
-		VkInstance instance; 
-		void* m_WindowHandel;
-		VkPhysicalDevice physicalDevice;
-		VkDevice device;
-		VkQueue graphicsQueue;
-		VkSurfaceKHR surface;
-		VkQueue presentQueue;
-		VkPipeline graphicsPipeline;
-		VkCommandPool commandPool;
-		std::vector<VkCommandBuffer> commandBuffers;
-
-		VkSwapchainKHR swapChain;
-		std::vector<VkImage> swapChainImages;
-		std::vector<VkImageView> swapChainImageViews;
-		VkPipelineLayout pipelineLayout;
-
-		std::vector<VkSemaphore> imageAvailableSemaphores;
-		std::vector<VkSemaphore> renderFinishedSemaphores;
-		std::vector<VkFence> inFlightFences;
-
-		VkRenderPass renderPass;
-		VkFormat swapChainImageFormat;
-		VkExtent2D swapChainExtent;
-		std::vector<VkFramebuffer> swapChainFramebuffers;
-
-		const WindowProps* m_props;
-		int MAX_FRAMES_IN_FLIGHT = 2;
-		uint32_t currentFrame = 0;
-		ImGui_ImplVulkanH_Window g_MainWindowData;
+	
 
 
 
@@ -165,25 +175,30 @@ namespace Miralis {
 		void createSwapChain();
 		void createImageViews();
 		void DestroyImageViews();
-		void createGraphicsPipeline();
 		std::vector<char> readFile(const std::string& filename);
 		VkShaderModule createShaderModule(const std::vector<char>& code);
 		VkDescriptorPool g_DescriptorPool;
 		uint32_t imageCount; 
 		ImDrawData* draw_data;
 		ImGuiIO* io;
+		VkMemoryRequirements memRequirements;
+
+		VkBuffer vertexBuffer;
+		VkDeviceMemory vertexBufferMemory;
+		VkBuffer indexBuffer;
+		VkDeviceMemory indexBufferMemory;
 		void createRenderPass();
 		void createFramebuffers();
 		void createCommandPool();
 		void DestroyFramebuffer();
 		void createCommandBuffers();
-		void recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex);
 		void createSyncObjects();
-		void drawFrame();
-		void DestroySyncObjects();
-		void recreateSwapChain();
-		void cleanupSwapChain();
 		void createDescriptorPool();
-		bool show_demo_window = true;
+		void DestroySyncObjects();
+		void cleanupSwapChain();
+		void IMGUIcreateDescriptorPool();
+		uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
+		void createBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory);
+		void copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
 	};
 }

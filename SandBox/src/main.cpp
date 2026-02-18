@@ -4,7 +4,6 @@
 class Sandbox : public Miralis::Application {
 public:
 	Sandbox() {
-		MR_LOG_CLIENT_TRACE("App Start");
 		PushLayer(new Miralis::ImGuiLayer());
 	};
 	~Sandbox() {

@@ -11,6 +11,10 @@ includedir["GLFW"] = "Miralis/vendor/GLFW/include"
 includedir["Vulkan"] = "$(VULKAN_SDK)/Include"
 includedir["ImGui"] = "Miralis/vendor/imgui"
 includedir["spdlog"] = "Miralis/vendor/spdlog/include"
+includedir["VMA"] = "Miralis/vendor/VulkanMemoryAllocator/include"
+includedir["GLM"] = "Miralis/vendor/GLM"
+
+
 
 include "Miralis/vendor/GLFW"
 include "Miralis/vendor/imgui"
@@ -42,7 +46,9 @@ project "Miralis"
 		includedir["GLFW"],
 		includedir["spdlog"],
 		includedir["Vulkan"],
-		includedir["ImGui"]
+		includedir["ImGui"],
+		includedir["VMA"],
+		includedir["GLM"] 
 	}
 	libdirs { "$(VULKAN_SDK)/Lib" }
 	links
