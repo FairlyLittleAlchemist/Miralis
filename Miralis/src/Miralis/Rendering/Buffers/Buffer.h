@@ -144,8 +144,7 @@ namespace Miralis {
 	class ResourceSet {
 	public:
 		virtual ~ResourceSet() = default;
-//		virtual void Bind() = 0;
-		static ResourceSet* Create(ResourceSetDescription const& resources);
+		static ResourceSet* Create(ResourceSetDescription const& description);
 		virtual void UpDateSet(std::initializer_list<Resource*>const& resourceSet) = 0;
 	};
 

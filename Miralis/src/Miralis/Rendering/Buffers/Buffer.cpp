@@ -21,7 +21,11 @@ namespace Miralis {
 		 MR_CORE_ASSERT(false, "0-0 Api Not yet supported or Invalid");
 	 }
 
-
+	 ResourceSet* Miralis::ResourceSet::Create(const ResourceSetDescription& description) {
+		 switch (Rendere::GetAPI()) {
+		 case RendererAPI::API::Vulkan :return nullptr;
+		 }
+	 }
 
 	 UnifromBuffer* UnifromBuffer::Create(uint32_t size)
 	 {

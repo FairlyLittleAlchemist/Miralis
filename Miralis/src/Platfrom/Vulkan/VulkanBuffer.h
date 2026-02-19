@@ -78,6 +78,9 @@ namespace Miralis {
 
 
 	};
-
+	class VulkanResourceSet : ResourceSet {
+	private :
+		
+	};
 
 }

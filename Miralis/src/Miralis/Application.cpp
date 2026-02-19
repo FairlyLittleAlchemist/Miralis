@@ -44,6 +44,7 @@ namespace Miralis {
 		}
 	};
 	
+		ResourceSet* myResource = ResourceSet::Create(mySetDec);
 
 		m_vertexBuffer = VertexBuffer::Create(verticesVec.data(), verticesVec.size(),  layout );
 
