@@ -3,7 +3,7 @@
 
 #include"Miralis/Rendering/GrapghicsContext.h"
 #include"Miralis/Log.h"
-#include"Miralis/core.h"
+#include"Miralis/Core.h"
 #include <vulkan/vulkan.h>
 #include <vector>
 #include<iostream>
