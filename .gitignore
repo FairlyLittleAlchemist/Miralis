@@ -16,3 +16,13 @@ bin-int/**
 *.sln
 *.filters
 *.vcxproj
+*.vcxproj.user
+
+build*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+CTestTestfile.cmake
+Testing/
+.idea/
