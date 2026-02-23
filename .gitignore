@@ -2,6 +2,16 @@
 *.user
 bin/**
 bin-int/**
+**/bin/**
+**/bin-int/**
+**/*.obj
+**/*.idb
+**/*.pdb
+**/*.ilk
+**/*.tlog
+**/*.lastbuildstate
+**/*.recipe
+**/*.log
 
 *.sln
 *.filters

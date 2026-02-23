@@ -1,0 +1,44 @@
+{
+    "configurations": [
+        {
+            "name": "Miralis (Fallback)",
+            "includePath": [
+                "${workspaceFolder}/Miralis/src",
+                "${workspaceFolder}/Miralis/vendor",
+                "${workspaceFolder}/Miralis/vendor/**",
+                "${workspaceFolder}/SandBox/src",
+                "${env:VULKAN_SDK}/Include"
+            ],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/Miralis/src",
+                    "${workspaceFolder}/Miralis/vendor",
+                    "${workspaceFolder}/SandBox/src",
+                    "${env:VULKAN_SDK}/Include"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "defines": [
+                "MR_PLATFORM_WINDOWS",
+                "VK_USE_PLATFORM_WIN32_KHR",
+                "NOMINMAX",
+                "WIN32_LEAN_AND_MEAN",
+                "_DEBUG"
+            ],
+            "windowsSdkVersion": "10.0.26100.0",
+            "compilerPath": "cl.exe",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-msvc-x64"
+        },
+        {
+            "name": "Miralis (CMake Provider)",
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "compilerPath": "cl.exe",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-msvc-x64"
+        }
+    ],
+    "version": 4
+}

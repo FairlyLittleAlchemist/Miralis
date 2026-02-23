@@ -1,6 +1,7 @@
 #pragma once
-#include "Miralis/Rendering/RendererAPI.h"*
+#include "Miralis/Rendering/RendererAPI.h"
 #include "glm/glm.hpp"
+#include "cstdint"
 namespace Miralis {
 	class RenderCommands {
 	public:

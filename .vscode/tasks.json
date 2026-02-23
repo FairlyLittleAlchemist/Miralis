@@ -1,0 +1,48 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Configure Debug",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "-S",
+                ".",
+                "-B",
+                "build/vs2022-x64",
+                "-G",
+                "Visual Studio 17 2022",
+                "-A",
+                "x64"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Build Debug",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "build/vs2022-x64",
+                "--config",
+                "Debug"
+            ],
+            "dependsOn": "Configure Debug",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Run Sandbox",
+            "type": "shell",
+            "command": "${workspaceFolder}\\build\\vs2022-x64\\bin\\Debug-Windows-x64\\Sandbox.exe",
+            "options": {
+                "cwd": "${workspaceFolder}\\SandBox"
+            },
+            "dependsOn": "Build Debug",
+            "problemMatcher": []
+        }
+    ]
+}

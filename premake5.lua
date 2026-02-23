@@ -16,8 +16,8 @@ includedir["GLM"] = "Miralis/vendor/GLM"
 
 
 
-include "Miralis/vendor/GLFW"
-include "Miralis/vendor/imgui"
+include "premake/deps/GLFW"
+include "premake/deps/imgui"
 
 project "Miralis"
       location "Miralis"

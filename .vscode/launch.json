@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Sandbox",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/vs2022-x64/bin/Debug-Windows-x64/Sandbox.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}/SandBox",
+            "environment": [],
+            "console": "integratedTerminal",
+            "preLaunchTask": "Build Debug"
+        }
+    ]
+}

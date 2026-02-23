@@ -1,6 +1,8 @@
 #include "VulkanBuffer.h"
 #include "Miralis/Window.h"
 #include "Platfrom/Vulkan/VulkanContext.h"
+#include <vector>
+
 namespace Miralis {
 
 
@@ -199,5 +201,45 @@ namespace Miralis {
 			vkFreeMemory(vkContext->device, uniformBuffersMemory[i], nullptr);
 		}
 	};
+
+
+
+	 VkDescriptorType ResourceTypeToVkType(ResourceDescription& r) {
+		 switch (r.getType()) {
+		 case ResourceType::UnifromBuffer: return VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER; 
+		 }
+		 MR_CORE_ASSERT(false , "Stop being lazy and implemnt this ")
+	 }
+
+
+	 VkDescriptorSetLayout VulkanResourceSet::CompileResourceSetDescription(const ResourceSetDescription& resourceSet)
+	 {
+		 VulkanContext* vkContext = static_cast<VulkanContext*>(Miralis::Window::m_Context.get());
+
+		 std::vector<VkDescriptorSetLayoutBinding> LayoutBindings;
+		 LayoutBindings.reserve(resourceSet.size());
+		 uint32_t index = 0;
+		 for (ResourceDescription r : resourceSet) {
+			 VkDescriptorSetLayoutBinding LayoutBinding;
+
+			 LayoutBinding.binding = index++;
+			 LayoutBinding.descriptorType =ResourceTypeToVkType(r);
+			 LayoutBinding.descriptorCount = r.GetCount();
+			 LayoutBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
+			 LayoutBindings.push_back(LayoutBinding);
+		 }
+		 
+		 VkDescriptorSetLayout descriptorSetLayout;
+
+		 VkDescriptorSetLayoutCreateInfo layoutInfo{};
+		 layoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+		 layoutInfo.bindingCount = LayoutBindings.size();
+		 layoutInfo.pBindings = LayoutBindings.data();
+
+
+		 MR_CORE_ASSERT(vkCreateDescriptorSetLayout(vkContext->device, &layoutInfo, nullptr, &descriptorSetLayout) == VK_SUCCESS, "Could not Allocate Buffer");
+
+		 return descriptorSetLayout;
+	 }
 
 }

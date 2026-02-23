@@ -25,7 +25,6 @@ namespace Miralis {
 
 	enum class ResourceType : uint8_t
 	{
-		None = 0,
 		UnifromBuffer
 	};
 
@@ -116,6 +115,7 @@ namespace Miralis {
 
 		inline uint32_t GetCount() const { return Count; };
 		inline uint32_t GetBinding() const { return Binding; };
+		inline ResourceType getType() const { return Type; };
 
 	private:
 		std::string Name;
@@ -145,7 +145,7 @@ namespace Miralis {
 	public:
 		virtual ~ResourceSet() = default;
 		static ResourceSet* Create(ResourceSetDescription const& description);
-		virtual void UpDateSet(std::initializer_list<Resource*>const& resourceSet) = 0;
+			virtual void UpDateSet(std::initializer_list<Resource*>const& resourceSet) = 0;
 	};
 
 

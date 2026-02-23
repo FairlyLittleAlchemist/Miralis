@@ -79,7 +79,13 @@ namespace Miralis {
 
 	};
 	class VulkanResourceSet : ResourceSet {
+	public :
+		VulkanResourceSet(const ResourceSetDescription& resourceSet) {
+			m_layout = CompileResourceSetDescription(resourceSet);
+		}
 	private :
+		VkDescriptorSetLayout m_layout;
+		VkDescriptorSetLayout  CompileResourceSetDescription(const ResourceSetDescription& resourceSet);
 		
 	};
 
