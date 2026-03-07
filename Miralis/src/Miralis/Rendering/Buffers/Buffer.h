@@ -6,10 +6,10 @@
 #include "Miralis/Log.h"
 
 namespace Miralis {
+	class PipeLine; // forward declare here
 
 	enum class ShaderDataType : uint8_t
 	{
-		None = 0,
 		Float,
 		Float2,
 		Float3,
@@ -143,9 +143,11 @@ namespace Miralis {
 
 	class ResourceSet {
 	public:
+
 		virtual ~ResourceSet() = default;
 		static ResourceSet* Create(ResourceSetDescription const& description);
-			virtual void UpDateSet(std::initializer_list<Resource*>const& resourceSet) = 0;
+		virtual void UpDateSet(std::initializer_list<Resource*>const& resourceSet) = 0;
+		virtual void Bind(PipeLine *pipe)= 0 ;
 	};
 
 

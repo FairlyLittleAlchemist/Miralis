@@ -23,7 +23,7 @@ namespace Miralis {
 
 	 ResourceSet* Miralis::ResourceSet::Create(const ResourceSetDescription& description) {
 		 switch (Rendere::GetAPI()) {
-		 case RendererAPI::API::Vulkan :return nullptr;
+		 case RendererAPI::API::Vulkan :return new VulkanResourceSet(description);
 		 }
 	 }
 

@@ -1,5 +1,6 @@
 #pragma once
 #include"Layer.h"
+#include  <algorithm>
 namespace Miralis {
 class LayerStack
 {

@@ -22,7 +22,6 @@
 	        void ImGuiLayer::OnUpdate()
 	        {
                 ImGui::NewFrame();
-
                 ImGui::ShowDemoWindow(&show_demo_window);
                 // 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
                 {
@@ -43,6 +42,7 @@
 
                     ImGui::End();
                 }
+
                 ImGui::Render();
 	        }
 
@@ -55,48 +55,63 @@
                 dispatcher.Dispatch<MouseScrolledEvent>(std::bind(&ImGuiLayer::OnMouseScroll, this, std::placeholders::_1));
                 dispatcher.Dispatch<KeyPressedEvent>(std::bind(&ImGuiLayer::OnKeyPressed, this, std::placeholders::_1));
                 dispatcher.Dispatch<KeyReleasedEvent>(std::bind(&ImGuiLayer::OnKeyRealsed, this, std::placeholders::_1));
-                dispatcher.Dispatch<WindowResizeEvent>(std::bind(&ImGuiLayer::OnWindowResize, this, std::placeholders::_1));
                 dispatcher.Dispatch<KeyTypedEvent>(std::bind(&ImGuiLayer::OnKeyTyped, this, std::placeholders::_1));
             }
 
             bool ImGuiLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e)
-            {
-                return false;
-            }
+	        {
+	            ImGuiIO& io = ImGui::GetIO();
+	            io.AddMouseButtonEvent(e.getMouseButton(), true);
+	            return io.WantCaptureMouse;  // block event if ImGui wants it
+	        }
 
             bool ImGuiLayer::OnMouseButtonRealsed(MouseButtonRealsedssedEvent& e)
-            {
-                return false;  
-            }
+	        {
+	            ImGuiIO& io = ImGui::GetIO();
+	            io.AddMouseButtonEvent(e.getMouseButton(), false);
+	            return io.WantCaptureMouse;
+	        }
 
             bool ImGuiLayer::OnMouseMove(MouseMovedEvent& e)
-            {
-                return false;
-            }
+	        {
+	            ImGuiIO& io = ImGui::GetIO();
+
+	            io.AddMousePosEvent(e.GetX(), e.GetY());
+	            return false;  // never block mouse move
+	        }
 
             bool ImGuiLayer::OnMouseScroll(MouseScrolledEvent& e)
-            {
-                return false;
-            }
+	        {
+	            ImGuiIO& io = ImGui::GetIO();
+	            io.AddMouseWheelEvent(e.GetXOffest(), e.GetYOffest());
+	            return io.WantCaptureMouse;
+	        }
 
             bool ImGuiLayer::OnKeyPressed(KeyPressedEvent& e)
-            {
-                return false;
-            }
+	        {
+	            ImGuiIO& io = ImGui::GetIO();
+	        	if (e.getKeyCode()== 343) {
+	        		return false;
+	        	}
+
+	            io.AddKeyEvent((ImGuiKey)e.getKeyCode(), true);
+	            return io.WantCaptureKeyboard;
+	        }
 
             bool ImGuiLayer::OnKeyRealsed(KeyReleasedEvent& e)
-            {
-                return false;
-            }
+	        {
+	            ImGuiIO& io = ImGui::GetIO();
+	        	if (e.getKeyCode()== 343) {
+	        		return false;
+	        	}
+	            io.AddKeyEvent((ImGuiKey)e.getKeyCode(), false);
+	            return io.WantCaptureKeyboard;
+	        }
 
             bool ImGuiLayer::OnKeyTyped(KeyTypedEvent& e)
-            {
-       
-                return false;
-            }
-
-            bool ImGuiLayer::OnWindowResize(WindowResizeEvent& e)
-            {
-                return false;
-            }
+	        {
+	            ImGuiIO& io = ImGui::GetIO();
+	            io.AddInputCharacter(e.getKeyCode());
+	            return io.WantCaptureKeyboard;
+	        }
         }

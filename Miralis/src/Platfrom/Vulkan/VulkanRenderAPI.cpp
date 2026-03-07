@@ -88,7 +88,7 @@ namespace Miralis {
 		submitInfo.commandBufferCount = 1;
 		submitInfo.pCommandBuffers = &vkContext->commandBuffers[vkContext->currentFrame];
 
-		VkSemaphore signalSemaphores[] = { vkContext->renderFinishedSemaphores[vkContext->currentFrame] };
+		VkSemaphore signalSemaphores[] = { vkContext->renderFinishedSemaphores[vkContext->imageIndex] };
 		submitInfo.signalSemaphoreCount = 1;
 		submitInfo.pSignalSemaphores = signalSemaphores;
 		MR_CORE_ASSERT(vkQueueSubmit(vkContext->graphicsQueue, 1, &submitInfo, vkContext->inFlightFences[vkContext->currentFrame]) == VK_SUCCESS, "failed to submit draw command buffer");
@@ -105,12 +105,12 @@ namespace Miralis {
 		presentInfo.pImageIndices = &vkContext->imageIndex;
 
 		VkResult result = vkQueuePresentKHR(vkContext->presentQueue, &presentInfo);
-
 		if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR) {
 			vkContext->recreateSwapChain();
 		}
 		vkContext->currentFrame = (vkContext->currentFrame + 1) % vkContext->MAX_FRAMES_IN_FLIGHT;
 		// Update and Render additional Platform Windows
+
 		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
 			ImGui::UpdatePlatformWindows();

@@ -1,9 +1,11 @@
-#include "WindowsWindow.h"
+#include "LunixWindow.h"
+
 #include "Miralis/Events/Event.h"
 #include "Miralis/Events/ApplicationEvent.h"
 #include "Miralis/Events/KeyEvent.h"
 #include "Miralis/Events/MouseEvent.h"
 #include "Platfrom/Vulkan/VulkanContext.h"
+#include <memory>
 namespace Miralis{
 std::unique_ptr<Miralis::GraphicsContext> Miralis::Window::m_Context;
 static bool s_GLFWInilized = false;
@@ -17,6 +19,8 @@ static void GlfwErrorCallBack(int error_code, const char* description) {
 };
 
 LunixWindow::LunixWindow(const WindowProps& props){
+
+
 	Init(props);
 }
 
@@ -46,6 +50,7 @@ void LunixWindow::SetVSync(bool enabled){
 }
 
 void LunixWindow::Init(const WindowProps& props){
+	glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_X11);
 
 	m_Data.Name = props.Name;
 	m_Data.Hight = props.Hight;
@@ -56,11 +61,32 @@ void LunixWindow::Init(const WindowProps& props){
 		glfwSetErrorCallback(GlfwErrorCallBack);
 	}
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+
 	m_Window = glfwCreateWindow((int)props.Width, (int)props.Hight, m_Data.Name.c_str(), nullptr, nullptr);
-#ifdef
-	m_Context = std::make_unique<VulkanContext>((void *)glfwGetWin32Window(m_Window), &props, m_Window);
+	int fbWidth, fbHeight;
+
+	int platform = glfwGetPlatform();
+	if (platform == GLFW_PLATFORM_X11) {
+		MR_LOG_CORE_DEBUG("x11");
+	}
+
+	if (platform == GLFW_PLATFORM_WAYLAND) {
+		MR_LOG_CORE_DEBUG("Wayland");
+	}
+
+
+
+	glfwGetFramebufferSize(m_Window, &fbWidth, &fbHeight);
+	m_Data.Width = fbWidth;
+	m_Data.Hight = fbHeight;
+	m_Props = props;
+	m_Props.Width = fbWidth;
+	m_Props.Hight = fbHeight;
+	m_Context = std::make_unique<VulkanContext>(&m_Props, m_Window);
+	const char* session = getenv("XDG_SESSION_TYPE");
+	MR_LOG_CORE_INFO("Session type: {0}", session ? session : "unknown");
 	glfwSetWindowUserPointer(m_Window, &m_Data);
-	 /*
+
 	glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos)
 		{
 			windowData& data = *(windowData*)glfwGetWindowUserPointer(window);
@@ -91,6 +117,12 @@ void LunixWindow::Init(const WindowProps& props){
 
 	glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height) {
 		windowData& data = *(windowData*)glfwGetWindowUserPointer(window);
+		VulkanContext* ctx = static_cast<VulkanContext*>(Window::m_Context.get());
+		ctx->m_props->Width = width;   // update props!
+		ctx->m_props->Hight = height;
+
+		ctx->recreateSwapChain();
+
 		WindowResizeEvent event(width, height);
 		data.EventCallBack(event);
 		});
@@ -109,7 +141,6 @@ void LunixWindow::Init(const WindowProps& props){
 
 	glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
 		windowData& data = *(windowData*)glfwGetWindowUserPointer(window);
-
 		switch (action)
 		{
 		case GLFW_PRESS: {
@@ -127,7 +158,7 @@ void LunixWindow::Init(const WindowProps& props){
 		}
 		}
 		});
-		*/
+
 		
 }
 

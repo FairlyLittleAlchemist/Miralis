@@ -1,5 +1,4 @@
-#pragma 
-#
+#pragma once
 #include "Miralis/Rendering/RendererAPI.h"
 namespace Miralis {
 	class VulkanRendererAPI : public RendererAPI {
@@ -7,5 +6,6 @@ namespace Miralis {
 		virtual void DrawIndexed(uint32_t count) override;
 		virtual void BeingDraw() override;
 		virtual void EndDraw() override;
+		virtual ~VulkanRendererAPI() = default;  // add this
 	};
 }
