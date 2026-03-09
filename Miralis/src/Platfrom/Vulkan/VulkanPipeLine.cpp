@@ -30,7 +30,7 @@ namespace Miralis {
 		return bindingDescription;
 	}
 	
-	Miralis::VulkanPipeLine::VulkanPipeLine(std::string& VertexPath, std::string& fragmnetPath, const std::vector<VertexLayout>& layouts)
+	Miralis::VulkanPipeLine::VulkanPipeLine( const std::string& VertexPath, const std::string& fragmnetPath, const std::vector<VertexLayout>& layouts)
 	{
 		VulkanContext* m_Context = static_cast<VulkanContext*>(Miralis::Window::m_Context.get());
 		std::vector<VkVertexInputBindingDescription> bindingDescriptions;

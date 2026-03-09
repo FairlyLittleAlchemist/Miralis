@@ -1,4 +1,4 @@
-#include "LunixWindow.h"
+#include "WindowsWindow.h"
 #include "Miralis/Events/Event.h"
 #include "Miralis/Events/ApplicationEvent.h"
 #include "Miralis/Events/KeyEvent.h"
@@ -9,32 +9,32 @@ std::unique_ptr<Miralis::GraphicsContext> Miralis::Window::m_Context;
 static bool s_GLFWInilized = false;
 Window* Window::Create(const WindowProps& props) {
 
-		return new LunixWindow(props);
+		return new WindowsWindow(props);
 }
 
 static void GlfwErrorCallBack(int error_code, const char* description) {
 	MR_LOG_CORE_ERROR("Code:{0} Description:{1}", error_code , description)
 };
 
-LunixWindow::LunixWindow(const WindowProps& props){
+WindowsWindow::WindowsWindow(const WindowProps& props){
 	Init(props);
 }
 
-LunixWindow::~LunixWindow(){
+WindowsWindow::~WindowsWindow(){
 	
 	ShutDown();
 }
 
-void LunixWindow::OnUpdate(){
+void WindowsWindow::OnUpdate(){
 	glfwPollEvents();
 }
 
-void LunixWindow::NewFrame()
+void WindowsWindow::NewFrame()
 {
 	m_Context->ImGUINewFrame();
 }
 
-void LunixWindow::SetVSync(bool enabled){
+void WindowsWindow::SetVSync(bool enabled){
 	if (enabled)
 	{
 		glfwSwapInterval(1);
@@ -45,7 +45,7 @@ void LunixWindow::SetVSync(bool enabled){
 	m_Data.VSync = enabled;
 }
 
-void LunixWindow::Init(const WindowProps& props){
+void WindowsWindow::Init(const WindowProps& props){
 	m_Data.Name = props.Name;
 	m_Data.Hight = props.Hight;
 	m_Data.Width = props.Width;
@@ -129,7 +129,7 @@ void LunixWindow::Init(const WindowProps& props){
 		
 }
 
-	void LunixWindow::ShutDown(){
+	void WindowsWindow::ShutDown(){
 		glfwDestroyWindow(m_Window);
 	}
 }
