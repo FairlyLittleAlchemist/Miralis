@@ -30,9 +30,10 @@ namespace Miralis {
 		return bindingDescription;
 	}
 	
-	Miralis::VulkanPipeLine::VulkanPipeLine( const std::string& VertexPath, const std::string& fragmnetPath, const std::vector<VertexLayout>& layouts)
+	Miralis::VulkanPipeLine::VulkanPipeLine( const std::string& VertexPath, const std::string& fragmnetPath, const std::vector<VertexLayout>& layouts , const std::vector<ResourceSet*>& resource)
 	{
 		VulkanContext* m_Context = static_cast<VulkanContext*>(Miralis::Window::m_Context.get());
+
 		std::vector<VkVertexInputBindingDescription> bindingDescriptions;
 		std::vector<VkVertexInputAttributeDescription> allAttributeDescriptions;
 		uint32_t offset = 0;
@@ -93,8 +94,10 @@ namespace Miralis {
 		rasterizer.polygonMode = VK_POLYGON_MODE_FILL;
 		rasterizer.lineWidth = 1.0f;
 		rasterizer.cullMode = VK_CULL_MODE_BACK_BIT;
-		rasterizer.frontFace = VK_FRONT_FACE_CLOCKWISE;
+		rasterizer.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
 		rasterizer.depthBiasEnable = VK_FALSE;
+
+
 
 		VkPipelineMultisampleStateCreateInfo multisampling{};
 		multisampling.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
@@ -126,9 +129,21 @@ namespace Miralis {
 		dynamicState.pDynamicStates = dynamicStates.data();
 
 		VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
+
+
 		pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-		pipelineLayoutInfo.setLayoutCount = 0;
+		pipelineLayoutInfo.setLayoutCount = resource.size();
+		std::vector<VkDescriptorSetLayout> Dlayouts;
+		for (ResourceSet* res : resource) {
+			Dlayouts.push_back(static_cast<VulkanResourceSet*>(res)->getLayout());
+		}
+		pipelineLayoutInfo.pSetLayouts = Dlayouts.data();
+
+
+
 		pipelineLayoutInfo.pushConstantRangeCount = 0;
+
+
 		MR_CORE_ASSERT(((vkCreatePipelineLayout(m_Context->device, &pipelineLayoutInfo, nullptr, &m_PipelineLayout) == VK_SUCCESS)), "Could not create pipline layout");
 		VkGraphicsPipelineCreateInfo pipelineInfo{};
 		pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;

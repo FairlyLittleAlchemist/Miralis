@@ -13,13 +13,12 @@ namespace Miralis {
 
 
 	
-	Miralis::VulkanContext::VulkanContext(void* windowHandel, const WindowProps* props, GLFWwindow* Window)
+	Miralis::VulkanContext::VulkanContext( WindowProps* props, GLFWwindow* Window)
 	{
 		io = nullptr;
 		m_Window = Window;
 		m_props = props;
-		m_WindowHandel = windowHandel;
-		instance = nullptr; 
+		instance = nullptr;
 		physicalDevice = VK_NULL_HANDLE;
 		deviceExtensions = {
 			VK_KHR_SWAPCHAIN_EXTENSION_NAME
@@ -216,7 +215,7 @@ namespace Miralis {
 				style.WindowRounding = 0.0f;
 				style.Colors[ImGuiCol_WindowBg].w = 1.0f;
 			}
-			ImGui_ImplGlfw_InitForVulkan(m_Window, true);
+			ImGui_ImplGlfw_InitForVulkan(m_Window, false);
 
 
 			ImGui_ImplVulkan_InitInfo init_info = {};
@@ -335,7 +334,13 @@ namespace Miralis {
 
 	void VulkanContext::ImGUINewFrame()
 	{
+		ImGui_ImplVulkan_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
+
+		int fbWidth, fbHeight;
+		glfwGetFramebufferSize(m_Window, &fbWidth, &fbHeight);
+		ImGui::GetIO().DisplaySize = ImVec2((float)fbWidth, (float)fbHeight);
+
 	}
 
 	bool VulkanContext::checkDeviceExtensionSupport(VkPhysicalDevice device)
@@ -588,7 +593,7 @@ namespace Miralis {
 	void VulkanContext::createSyncObjects()
 	{
 		imageAvailableSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
-		renderFinishedSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
+		renderFinishedSemaphores.resize(3);
 		inFlightFences.resize(MAX_FRAMES_IN_FLIGHT);
 		VkSemaphoreCreateInfo semaphoreInfo{};
 		semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
@@ -598,8 +603,12 @@ namespace Miralis {
 		for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
 
 			MR_CORE_ASSERT(vkCreateSemaphore(device, &semaphoreInfo, nullptr, &imageAvailableSemaphores[i]) == VK_SUCCESS, "Could not create Semaphore");
-			MR_CORE_ASSERT(vkCreateSemaphore(device, &semaphoreInfo, nullptr, &renderFinishedSemaphores[i]) == VK_SUCCESS, "Could not create Semaphore");
 			MR_CORE_ASSERT(vkCreateFence(device, &fenceInfo, nullptr, &inFlightFences[i]) == VK_SUCCESS, "Could not create Fence");
+		}
+
+		for (size_t i= 0 ; i <3 ; i++) {
+			MR_CORE_ASSERT(vkCreateSemaphore(device, &semaphoreInfo, nullptr, &renderFinishedSemaphores[i]) == VK_SUCCESS, "Could not create Semaphore");
+
 		}
 
 	}
@@ -639,13 +648,17 @@ namespace Miralis {
 
 	void VulkanContext::recreateSwapChain()
 	{
-	
+
+		VulkanContext* ctx = static_cast<VulkanContext*>(Window::m_Context.get());
+
 		vkDeviceWaitIdle(device);
 		cleanupSwapChain();
 
 		createSwapChain();
 		createImageViews();
 		createFramebuffers();
+
+		MR_LOG_CORE_INFO("Swapchain extent after recreate: {0}x{1}", swapChainExtent.width, swapChainExtent.height);
 
 	}
 
@@ -709,13 +722,7 @@ namespace Miralis {
 
 
 	void VulkanContext::createSurface(){
-	
-		VkWin32SurfaceCreateInfoKHR createInfo{};
-		createInfo.sType = VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;
-		createInfo.hwnd =(HWND) m_WindowHandel;
-		createInfo.hinstance = GetModuleHandle(nullptr);
-		MR_CORE_ASSERT((vkCreateWin32SurfaceKHR(instance, &createInfo, nullptr, &surface) == VK_SUCCESS),"Failed To create suraface")
-
+	glfwCreateWindowSurface(instance , m_Window, nullptr, &surface);
 	};
 
 

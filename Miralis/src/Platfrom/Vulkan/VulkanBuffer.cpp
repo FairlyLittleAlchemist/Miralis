@@ -3,6 +3,9 @@
 #include "Platfrom/Vulkan/VulkanContext.h"
 #include <vector>
 
+#include "VulkanPipeLine.h"
+#include "Miralis/Rendering/PipeLine.h"
+
 namespace Miralis {
 
 
@@ -173,7 +176,7 @@ namespace Miralis {
 
 	
 
-	VulkanUniformBuffer::VulkanUniformBuffer(size_t size) :vkContext(static_cast<VulkanContext*>(Miralis::Window::m_Context.get())) {
+	VulkanUniformBuffer::VulkanUniformBuffer(uint32_t size) :vkContext(static_cast<VulkanContext*>(Miralis::Window::m_Context.get())) {
 		m_size = size;
 		VkDeviceSize bufferSize = sizeof(float) * size;
 		void Upload(const float* data, size_t size);
@@ -212,6 +215,41 @@ namespace Miralis {
 	 }
 
 
+	 void VulkanResourceSet::Bind(PipeLine *pipe) {
+	 	VulkanContext* vkContext = static_cast<VulkanContext*>(Miralis::Window::m_Context.get());
+	 	VulkanPipeLine* vkShader = static_cast<VulkanPipeLine*>(pipe);
+	 	vkCmdBindDescriptorSets(vkContext->commandBuffers[vkContext->currentFrame], VK_PIPELINE_BIND_POINT_GRAPHICS, vkShader->getLayout(), 0, 1, &descriptorSets[vkContext->currentFrame], 0, nullptr);
+
+	 }
+
+	 void VulkanResourceSet::UpDateSet(std::initializer_list<Resource *> const &resourceSet) {
+
+	 	VulkanContext* vkContext = static_cast<VulkanContext*>(Miralis::Window::m_Context.get());
+	 	for (size_t i = 0; i < vkContext->MAX_FRAMES_IN_FLIGHT; i++) {
+
+	 		for (Resource *resource : resourceSet) {
+	 			VulkanUniformBuffer* uniform = static_cast<VulkanUniformBuffer*>(resource);	 			VkDescriptorBufferInfo bufferInfo{};
+	 			bufferInfo.buffer = uniform->getBuffer(i);
+	 			bufferInfo.offset = 0;
+	 			bufferInfo.range = uniform->getSize();
+	 			VkWriteDescriptorSet descriptorWrite{};
+	 			descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+	 			descriptorWrite.dstSet = descriptorSets[i];
+	 			descriptorWrite.dstBinding = 0;
+	 			descriptorWrite.dstArrayElement = 0;
+	 			descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+	 			descriptorWrite.descriptorCount = 1;
+	 			descriptorWrite.pBufferInfo = &bufferInfo;
+	 			vkUpdateDescriptorSets(vkContext->device, 1, &descriptorWrite, 0, nullptr);
+
+	 		}
+
+
+	 	}
+
+
+	 }
+
 	 VkDescriptorSetLayout VulkanResourceSet::CompileResourceSetDescription(const ResourceSetDescription& resourceSet)
 	 {
 		 VulkanContext* vkContext = static_cast<VulkanContext*>(Miralis::Window::m_Context.get());
@@ -237,9 +275,23 @@ namespace Miralis {
 		 layoutInfo.pBindings = LayoutBindings.data();
 
 
-		 MR_CORE_ASSERT(vkCreateDescriptorSetLayout(vkContext->device, &layoutInfo, nullptr, &descriptorSetLayout) == VK_SUCCESS, "Could not Allocate Buffer");
+		 MR_CORE_ASSERT(vkCreateDescriptorSetLayout(vkContext->device, &layoutInfo, nullptr, &descriptorSetLayout) == VK_SUCCESS, "Could not Create LayOut");
 
 		 return descriptorSetLayout;
 	 }
 
+	 void VulkanResourceSet::CreateResourceSet() {
+		 VulkanContext* vkContext = static_cast<VulkanContext*>(Miralis::Window::m_Context.get());
+
+	 	std::vector<VkDescriptorSetLayout> layouts(vkContext->MAX_FRAMES_IN_FLIGHT, m_layout);
+	 	VkDescriptorSetAllocateInfo allocInfo{};
+	 	allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+	 	allocInfo.descriptorPool = vkContext->descriptorPool;
+	 	allocInfo.descriptorSetCount = static_cast<uint32_t>(vkContext->MAX_FRAMES_IN_FLIGHT);
+	 	allocInfo.pSetLayouts = layouts.data();
+	 	descriptorSets.resize(vkContext->MAX_FRAMES_IN_FLIGHT);
+		 MR_CORE_ASSERT(vkAllocateDescriptorSets(vkContext->device, &allocInfo, descriptorSets.data()) == VK_SUCCESS, "Could not Create ResourceSet");
+
+
+	 }
 }

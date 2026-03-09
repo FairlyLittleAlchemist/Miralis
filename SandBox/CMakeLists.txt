@@ -22,8 +22,3 @@ if(MSVC)
     target_compile_options(Sandbox PRIVATE "/utf-8")
 endif()
 
-if(WIN32)
-    set_target_properties(Sandbox PROPERTIES
-        VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/SandBox"
-    )
-endif()

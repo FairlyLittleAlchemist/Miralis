@@ -1,8 +1,12 @@
 #pragma once
 #include "Miralis/Rendering/Buffers/Buffer.h"
+
 #include <vulkan/vulkan.h>
 #include <glm/glm.hpp>
 #include <Platfrom/Vulkan/VulkanContext.h>
+
+#include "Miralis/Rendering/PipeLine.h"
+
 namespace Miralis {
 	struct FormatInfo {
 		VkFormat format;
@@ -62,11 +66,12 @@ namespace Miralis {
 	class VulkanUniformBuffer : public UnifromBuffer {
 	public:
 
-		VulkanUniformBuffer(size_t size);
+		VulkanUniformBuffer(uint32_t size);
 		~VulkanUniformBuffer() override;
 		void UploadUnifrom(const float* data, uint32_t size)  override;
 		uint32_t GetSize()  override { return m_size; }  ;
 		VkBuffer getBuffer(size_t i) { return uniformBuffers[i]; };
+		uint32_t getSize() { return m_size; };
 
 	private:
 		uint32_t m_size;
@@ -78,15 +83,24 @@ namespace Miralis {
 
 
 	};
-	class VulkanResourceSet : ResourceSet {
+	class VulkanResourceSet :public ResourceSet {
 	public :
 		VulkanResourceSet(const ResourceSetDescription& resourceSet) {
 			m_layout = CompileResourceSetDescription(resourceSet);
-		}
+		CreateResourceSet();
+
+	}
+		virtual  void Bind(PipeLine *pipe) override;
+
+		virtual void UpDateSet(std::initializer_list<Resource*>const& resourceSet) ;
+		VkDescriptorSetLayout getLayout(){return m_layout;};
+
 	private :
 		VkDescriptorSetLayout m_layout;
 		VkDescriptorSetLayout  CompileResourceSetDescription(const ResourceSetDescription& resourceSet);
-		
+		void  CreateResourceSet();
+		std::vector<VkDescriptorSet> descriptorSets;
+
 	};
 
 }

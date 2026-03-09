@@ -5,12 +5,12 @@
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include <GLFW/glfw3native.h>
 namespace Miralis {
-class WindowsWindow : public Window
+class LunixWindow : public Window
 {
 public:
-	WindowsWindow(const WindowProps& props);
+	LunixWindow(const WindowProps& props);
 	
-	virtual ~WindowsWindow() override;
+	virtual ~LunixWindow() override;
 	void OnUpdate() override;
 	void NewFrame() override;
 	inline unsigned int  getWidth()const override { return m_Data.Width; };

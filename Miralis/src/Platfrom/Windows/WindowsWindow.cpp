@@ -1,4 +1,4 @@
-#include "LunixWindow.h"
+#include "WindowsWindow.h"
 #include "Miralis/Events/Event.h"
 #include "Miralis/Events/ApplicationEvent.h"
 #include "Miralis/Events/KeyEvent.h"
@@ -46,6 +46,7 @@ void LunixWindow::SetVSync(bool enabled){
 }
 
 void LunixWindow::Init(const WindowProps& props){
+
 	m_Data.Name = props.Name;
 	m_Data.Hight = props.Hight;
 	m_Data.Width = props.Width;
@@ -56,6 +57,7 @@ void LunixWindow::Init(const WindowProps& props){
 	}
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 	m_Window = glfwCreateWindow((int)props.Width, (int)props.Hight, m_Data.Name.c_str(), nullptr, nullptr);
+#ifdef
 	m_Context = std::make_unique<VulkanContext>((void *)glfwGetWin32Window(m_Window), &props, m_Window);
 	glfwSetWindowUserPointer(m_Window, &m_Data);
 	 /*

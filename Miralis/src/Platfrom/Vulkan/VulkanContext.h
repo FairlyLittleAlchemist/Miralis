@@ -1,9 +1,9 @@
- #pragma once
-#define VK_USE_PLATFORM_WIN32_KHR
+#pragma once
+#define VK_USE_PLATFORM_WAYLAND_KHR
 
 #include"Miralis/Rendering/GrapghicsContext.h"
 #include"Miralis/Log.h"
-#include"Miralis/core.h"
+#include"Miralis/Core.h"
 #include <vulkan/vulkan.h>
 #include <vector>
 #include<iostream>
@@ -15,8 +15,8 @@
 #include "Miralis/Window.h"
 #include "imgui.h"
 #include "Platfrom/ImGUI/Vulkan/imgui_impl_vulkan.h"
-#include "Platfrom/ImGUI/Windows/imgui_impl_glfw.h"
-struct  GLFWwindow;
+#include "Platfrom/ImGUI/Window/imgui_impl_glfw.h"
+ struct  GLFWwindow;
 namespace Miralis {
 
 	
@@ -49,8 +49,8 @@ namespace Miralis {
 		VkFormat swapChainImageFormat;
 		VkExtent2D swapChainExtent;
 		std::vector<VkFramebuffer> swapChainFramebuffers;
-		const WindowProps* m_props;
-		int MAX_FRAMES_IN_FLIGHT = 2;
+		WindowProps* m_props;
+		int MAX_FRAMES_IN_FLIGHT = 3;
 		uint32_t currentFrame = 0;
 		ImGui_ImplVulkanH_Window g_MainWindowData;
 		void recreateSwapChain();
@@ -60,7 +60,7 @@ namespace Miralis {
 
 	public :
 		
-		VulkanContext(void* windowHandel, const WindowProps* props, GLFWwindow* Window);
+		VulkanContext(  WindowProps* props, GLFWwindow* Window);
 		~VulkanContext();
 		virtual void Init() override;
 		virtual void SwapBuffers() override;

@@ -9,20 +9,14 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-option(MIRALIS_DISABLE_VCPKG_AUTO "Disable Visual Studio vcpkg project auto-integration" ON)
-if(MSVC)
-    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-    add_compile_options("$<$<COMPILE_LANGUAGE:CXX>:/utf-8>")
-    if(MIRALIS_DISABLE_VCPKG_AUTO)
-        set(CMAKE_VS_GLOBALS "VcpkgEnabled=false")
-    endif()
-endif()
+
 
 set(OUT_BASE "${CMAKE_SOURCE_DIR}/bin/$<CONFIG>-${CMAKE_SYSTEM_NAME}-x64")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${OUT_BASE}")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${OUT_BASE}")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${OUT_BASE}")
-
+set(GLFW_BUILD_X11 ON)
+set(GLFW_BUILD_WAYLAND ON)
 add_subdirectory(Miralis/vendor/GLFW)
 add_subdirectory(Miralis/vendor/GLM)
 add_subdirectory(Miralis/vendor/spdlog)

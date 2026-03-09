@@ -3,6 +3,7 @@
 #include "Events/Event.h"
 #include "Miralis/Rendering/GrapghicsContext.h"
 #include <string.h>
+#include<memory>
 #include<functional>
 
 namespace Miralis {
