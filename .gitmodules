@@ -11,3 +11,12 @@
 [submodule "Miralis/vendor/GLM"]
 	path = Miralis/vendor/GLM
 	url = https://github.com/g-truc/glm.git
+[submodule "Miralis/vendor/VulkanMemoryAllocator"]
+	path = Miralis/vendor/VulkanMemoryAllocator
+	url = https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator.git
+[submodule "Miralis/vendor/tracy"]
+	path = Miralis/vendor/tracy
+	url = https://github.com/wolfpld/tracy.git
+[submodule "Miralis/vendor/stb"]
+	path = Miralis/vendor/stb
+	url = https://github.com/nothings/stb.git
